@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "hardhat": "^2.13.1",
+    "node-fetch": "2",
     "solc": "^0.8.19"
   }
 }

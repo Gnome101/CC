@@ -36,7 +36,6 @@ module.exports = {
     hardhat: {
       forking: {
         url: MAINNET_RPC_URL,
-        blockNumber: 16403320,
       },
       chainId: 31337,
     },

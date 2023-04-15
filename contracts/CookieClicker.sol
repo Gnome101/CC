@@ -5,8 +5,13 @@ pragma solidity 0.8.18;
 //Users can upgrade their cookie and earn more
 //For example, a user can do a cursor upgrade and earn 0.1 cookies per second
 //Users are given an ERC20 token called cookies(right now just points)
+interface ZKaptchaInterface {
+    function verifyZkProof(bytes calldata zkProof) external view returns (bool);
+}
+
 contract CookieClicker {
     address immutable dev;
+    ZKaptchaInterface immutable zkaptcha;
     modifier sessionStarted(address user) {
         //The game only works if a session was started
         require(block.timestamp <= mostRecentUserSession[user].expiraryDate);
@@ -19,10 +24,15 @@ contract CookieClicker {
         _;
     }
 
+    // implement ZKaptcha anti-bot in your smart contract
+
     constructor() {
         dev = msg.sender;
         idToUpgrade[1] = Upgrade(10, 1, 0);
         idToUpgrade[2] = Upgrade(10, 0, 1);
+        zkaptcha = ZKaptchaInterface(
+            0xf5DCa59461adFFF5089BE5068364eC10B86c2a88
+        );
     }
 
     mapping(address => cookieGame) public userCookie;
@@ -69,6 +79,20 @@ contract CookieClicker {
         clickAmount +=
             1 +
             mostRecentUserSession[user].sessionGame.clickModifier;
+    }
+
+    mapping(address => uint256) userCaptchaStart;
+
+    function giveUserCaptcha(address user) public onlyDev {
+        userCaptchaStart[user] = block.timestamp;
+    }
+
+    uint256 public timeSpent;
+
+    function submitCaptcha(bytes memory proof) public {
+        require(userCaptchaStart[msg.sender] > 0);
+        require(zkaptcha.verifyZkProof(proof));
+        timeSpent = block.timestamp - userCaptchaStart[msg.sender];
     }
 
     function addClick(

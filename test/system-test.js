@@ -60,9 +60,9 @@ describe("Leveraged V3 Manager ", function () {
         browserID,
         deployer.address
       );
-      await cookieClicker.startSession(sessionHash, 100);
+      await cookieClicker.startSession(sessionHash, 1000);
     });
-    describe("User Game Actions 121", function () {
+    describe("User Game Actions ", function () {
       it("we can submit clicks during a session", async () => {
         await cookieClicker.addClick(deployer.address, "100");
         // console.log(
@@ -86,6 +86,46 @@ describe("Leveraged V3 Manager ", function () {
           123,
           deployer.address,
           updatedCookieClicker
+        );
+      });
+      it("user can submit clicks, purchase upgrade, and end it 121", async () => {
+        //Might make it so that only the clicking is done abstracted
+        //Make it so that the other stuff is just submitted by us but not included in the bundle
+        await cookieClicker.addClick(deployer.address, "100");
+        //User now has 100 cookies in their browsers cookie
+        console.log(
+          ("Interest Before:",
+          await cookieClicker.getSessionUserInterest(
+            deployer.address
+          )).toString()
+        );
+        await cookieClicker.purchaseUpgradeForUser(deployer.address, 1);
+        const timeStamp = (await ethers.provider.getBlock("latest")).timestamp;
+
+        await ethers.provider.send("evm_mine", [timeStamp + 100]);
+        console.log(
+          ("Interest After:",
+          await cookieClicker.getSessionUserInterest(
+            deployer.address
+          )).toString()
+        );
+        console.log(
+          "Current Reward Per Click:",
+          (await cookieClicker.simulateClick(deployer.address)).toString()
+        );
+        await cookieClicker.purchaseUpgradeForUser(deployer.address, 2);
+        console.log(
+          "Current Reward Per Click:",
+          (await cookieClicker.simulateClick(deployer.address)).toString()
+        );
+        //await cookieClicker.addClick(deployer.address, "100");
+        console.log(
+          (await cookieClicker.userCookie(deployer.address)).toString()
+        );
+        await cookieClicker.addClick(deployer.address, "200");
+        await cookieClicker.completeSession(123, deployer.address);
+        console.log(
+          (await cookieClicker.userCookie(deployer.address)).toString()
         );
       });
     });

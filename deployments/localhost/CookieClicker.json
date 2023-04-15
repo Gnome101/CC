@@ -1,0 +1,274 @@
+{
+  "address": "0xFCFE742e19790Dd67a627875ef8b45F17DB1DaC6",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "click",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "createCookie",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getUserCookieBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "cookieBalance",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "idToUpgrade",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "cost",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "cookieRateBooster",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "clickModiferBooster",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "upgradeID",
+          "type": "uint256"
+        }
+      ],
+      "name": "purchaseUpgrade",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userCookie",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalClicks",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalSpent",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "cookiePerSecond",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "interestLastComputed",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "clickModifier",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xee6d2539568261fcf2f56b08522732cd7738e392fb880fab5b0a986db12eae5e",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0xFCFE742e19790Dd67a627875ef8b45F17DB1DaC6",
+    "transactionIndex": 0,
+    "gasUsed": "396023",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xeba7b480ca01e0070e516bd647b66ed8d6a53f980a3c8128d8ea6d427e2ee016",
+    "transactionHash": "0xee6d2539568261fcf2f56b08522732cd7738e392fb880fab5b0a986db12eae5e",
+    "logs": [],
+    "blockNumber": 16403321,
+    "cumulativeGasUsed": "396023",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "f9128c0bb42747e0e9119e20baf5696c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"click\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"createCookie\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getUserCookieBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cookieBalance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"idToUpgrade\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cost\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookieRateBooster\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModiferBooster\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"upgradeID\",\"type\":\"uint256\"}],\"name\":\"purchaseUpgrade\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userCookie\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalClicks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalSpent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookiePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"interestLastComputed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModifier\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/CookieClicker.sol\":\"CookieClicker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":2000},\"remappings\":[]},\"sources\":{\"contracts/CookieClicker.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity 0.8.18;\\n\\n//Users can upgrade their cookie and earn more\\n//For example, a user can do a cursor upgrade and earn 0.1 cookies per second\\n//Users are given an ERC20 token called cookies(right now just points)\\ncontract CookieClicker {\\n    constructor() {\\n        idToUpgrade[1] = Upgrade(10, 1, 0);\\n        idToUpgrade[2] = Upgrade(10, 0, 1);\\n    }\\n\\n    mapping(address => CookieGame) public userCookie;\\n    mapping(uint256 => Upgrade) public idToUpgrade;\\n    struct CookieGame {\\n        uint256 totalClicks;\\n        uint256 totalSpent;\\n        uint256 cookiePerSecond; //Users can earn more per second\\n        uint256 interestLastComputed;\\n        uint256 clickModifier;\\n    }\\n    struct Upgrade {\\n        uint256 cost;\\n        uint256 cookieRateBooster;\\n        uint256 clickModiferBooster;\\n    }\\n\\n    function createCookie() public {\\n        userCookie[msg.sender] = CookieGame(0, 0, 0, block.timestamp, 0);\\n    }\\n\\n    function click() public {\\n        userCookie[msg.sender].totalClicks +=\\n            1 +\\n            userCookie[msg.sender].clickModifier;\\n    }\\n\\n    //Whenever a user purchases a cookie, the program adds up their interest\\n    function purchaseUpgrade(uint256 upgradeID) public {\\n        uint256 cookieBalance = getUserCookieBalance();\\n        userCookie[msg.sender].interestLastComputed = block.timestamp;\\n        require(cookieBalance >= idToUpgrade[upgradeID].cost);\\n        userCookie[msg.sender].totalSpent += idToUpgrade[upgradeID].cost;\\n        userCookie[msg.sender].cookiePerSecond += idToUpgrade[upgradeID]\\n            .cookieRateBooster;\\n        userCookie[msg.sender].clickModifier += idToUpgrade[upgradeID]\\n            .clickModiferBooster;\\n    }\\n\\n    function getUserCookieBalance()\\n        public\\n        view\\n        returns (uint256 cookieBalance)\\n    {\\n        CookieGame memory currentGame = userCookie[msg.sender];\\n        uint256 timePassed = block.timestamp - currentGame.interestLastComputed;\\n        uint256 interestEarned = timePassed * currentGame.cookiePerSecond;\\n        cookieBalance =\\n            currentGame.totalClicks -\\n            currentGame.totalSpent +\\n            interestEarned;\\n    }\\n}\\n\",\"keccak256\":\"0x7962f5d3eda060db7708b7992bac9626dee23b359886a6175f5058042a6ed147\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040805160608082018352600a80835260016020808501828152600086880181815284825284845296517fcc69885fda6bcc1a4ace058b4a62bf5e179ea78fd58a1ccd71c22cc9b688792f5590517fcc69885fda6bcc1a4ace058b4a62bf5e179ea78fd58a1ccd71c22cc9b68879305594517fcc69885fda6bcc1a4ace058b4a62bf5e179ea78fd58a1ccd71c22cc9b6887931558551938401865291835282820184815294830181815260029094529052517fd9d16d34ffb15ba3a3d852f0d403e2ce1d691fb54de27ac87cd2f993f3ec330f5590517fd9d16d34ffb15ba3a3d852f0d403e2ce1d691fb54de27ac87cd2f993f3ec331055517fd9d16d34ffb15ba3a3d852f0d403e2ce1d691fb54de27ac87cd2f993f3ec3311556104718061013b6000396000f3fe608060405234801561001057600080fd5b50600436106100725760003560e01c8063e0fc587011610050578063e0fc587014610101578063e1b1a21414610114578063e55a9ddf1461017057600080fd5b8063310e7ec5146100775780637d55923d14610092578063d11590511461009c575b600080fd5b61007f6101b9565b6040519081526020015b60405180910390f35b61009a61024d565b005b6100d96100aa366004610373565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a001610089565b61009a61010f3660046103b0565b610291565b61009a6040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b61019e61017e3660046103b0565b600160208190526000918252604090912080549181015460029091015483565b60408051938452602084019290925290820152606001610089565b33600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083018190526004909101546080830152829061021090426103f8565b905060008260400151826102249190610411565b9050808360200151846000015161023b91906103f8565b6102459190610428565b935050505090565b3360009081526020819052604090206004015461026b906001610428565b336000908152602081905260408120805490919061028a908490610428565b9091555050565b600061029b6101b9565b336000908152602081815260408083204260039091015585835260019091529020549091508110156102cc57600080fd5b6000828152600160208181526040808420543385529184905283209091018054919290916102fb908490610428565b909155505060008281526001602081815260408084209092015433845290839052908220600201805491929091610333908490610428565b909155505060008281526001602090815260408083206002015433845291839052822060040180549192909161036a908490610428565b90915550505050565b60006020828403121561038557600080fd5b813573ffffffffffffffffffffffffffffffffffffffff811681146103a957600080fd5b9392505050565b6000602082840312156103c257600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b8181038181111561040b5761040b6103c9565b92915050565b808202811582820484141761040b5761040b6103c9565b8082018082111561040b5761040b6103c956fea2646970667358221220332f330b68d00b21f67383827fd63818d7ca246d5a2c9f7da89caf349c00f93f64736f6c63430008120033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100725760003560e01c8063e0fc587011610050578063e0fc587014610101578063e1b1a21414610114578063e55a9ddf1461017057600080fd5b8063310e7ec5146100775780637d55923d14610092578063d11590511461009c575b600080fd5b61007f6101b9565b6040519081526020015b60405180910390f35b61009a61024d565b005b6100d96100aa366004610373565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a001610089565b61009a61010f3660046103b0565b610291565b61009a6040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b61019e61017e3660046103b0565b600160208190526000918252604090912080549181015460029091015483565b60408051938452602084019290925290820152606001610089565b33600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083018190526004909101546080830152829061021090426103f8565b905060008260400151826102249190610411565b9050808360200151846000015161023b91906103f8565b6102459190610428565b935050505090565b3360009081526020819052604090206004015461026b906001610428565b336000908152602081905260408120805490919061028a908490610428565b9091555050565b600061029b6101b9565b336000908152602081815260408083204260039091015585835260019091529020549091508110156102cc57600080fd5b6000828152600160208181526040808420543385529184905283209091018054919290916102fb908490610428565b909155505060008281526001602081815260408084209092015433845290839052908220600201805491929091610333908490610428565b909155505060008281526001602090815260408083206002015433845291839052822060040180549192909161036a908490610428565b90915550505050565b60006020828403121561038557600080fd5b813573ffffffffffffffffffffffffffffffffffffffff811681146103a957600080fd5b9392505050565b6000602082840312156103c257600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b8181038181111561040b5761040b6103c9565b92915050565b808202811582820484141761040b5761040b6103c9565b8082018082111561040b5761040b6103c956fea2646970667358221220332f330b68d00b21f67383827fd63818d7ca246d5a2c9f7da89caf349c00f93f64736f6c63430008120033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 30,
+        "contract": "contracts/CookieClicker.sol:CookieClicker",
+        "label": "userCookie",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_struct(CookieGame)46_storage)"
+      },
+      {
+        "astId": 35,
+        "contract": "contracts/CookieClicker.sol:CookieClicker",
+        "label": "idToUpgrade",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_uint256,t_struct(Upgrade)53_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_mapping(t_address,t_struct(CookieGame)46_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct CookieClicker.CookieGame)",
+        "numberOfBytes": "32",
+        "value": "t_struct(CookieGame)46_storage"
+      },
+      "t_mapping(t_uint256,t_struct(Upgrade)53_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct CookieClicker.Upgrade)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Upgrade)53_storage"
+      },
+      "t_struct(CookieGame)46_storage": {
+        "encoding": "inplace",
+        "label": "struct CookieClicker.CookieGame",
+        "members": [
+          {
+            "astId": 37,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "totalClicks",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 39,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "totalSpent",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 41,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "cookiePerSecond",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 43,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "interestLastComputed",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 45,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "clickModifier",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "160"
+      },
+      "t_struct(Upgrade)53_storage": {
+        "encoding": "inplace",
+        "label": "struct CookieClicker.Upgrade",
+        "members": [
+          {
+            "astId": 48,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "cost",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 50,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "cookieRateBooster",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 52,
+            "contract": "contracts/CookieClicker.sol:CookieClicker",
+            "label": "clickModiferBooster",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

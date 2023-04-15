@@ -128,22 +128,32 @@ describe("Cookie Clicker ", function () {
         );
       });
       it("we can give a captcha, user can solve it 33", async () => {
+        await cookieClicker.giveUserCaptcha(deployer.address);
         const accounts = config.networks.hardhat.accounts;
         const index = 0; // first wallet, increment for next wallets
         const wallet1 = ethers.Wallet.fromMnemonic(
           accounts.mnemonic,
           accounts.path + `/${index}`
         );
-        //console.log("PublicKey:", wallet1.publicKey);
-        //const response = await getCaptcha();
-        //console.log(response);
-        //const ans = await askQuestion("What is it saying: ");
-        //console.log(ans);
-        const proof = await getProof(
-          "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B",
-          "z4Tlw1"
-        );
-        console.log(proof);
+        console.log("PublicKey:", wallet1.publicKey);
+        const response = await getCaptcha();
+        const fs = require("fs");
+
+        const base64Code = response;
+
+        const imageBuffer = Buffer.from(base64Code, "base64");
+
+        // Write the buffer to a file
+        fs.writeFile("output.jpg", imageBuffer, (err) => {
+          if (err) throw err;
+          console.log("JPG photo has been generated successfully!");
+        });
+
+        const ans = await askQuestion("What is it saying: ");
+        console.log(ans);
+        const proof = await getProof(deployer.address, ans);
+        await cookieClicker.submitCaptcha(proof);
+        console.log((await cookieClicker.timeSpent()).toString());
         // rough sketch of sending args to the prover
       });
       const readline = require("readline");
@@ -180,25 +190,42 @@ describe("Cookie Clicker ", function () {
       const resptext = await response.text();
       const b64data = JSON.parse(resptext).png;
       const pngData = b64data.replace(/-/g, "+").replace(/_/g, "/");
-      return "data:image/png;base64," + pngData;
+      return pngData;
     } catch (error) {
       console.error("Error fetching captcha:", error);
       return null;
     }
   }
   // rough sketch of sending args to the prover
+  // rough sketch of sending args to the prover
+  // rough sketch of sending args to the prover
   const proverAPI =
     "https://urrc4cdvzg.execute-api.us-east-2.amazonaws.com/default/zkaptchaprover";
-  async function getProof(pkey, captcha_text) {
-    const ting = await fetch(proverAPI, {
+  const getProof = async (pkey, captcha_text) => {
+    return await fetch(proverAPI, {
       method: "POST",
       // ex: pkey = "0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B"
       // ex: captcha_text = "z4Tlw1"
       body: JSON.stringify({ pkey: pkey, preimage: captcha_text }),
-    });
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log("error121");
 
-    //const parsedData = JSON.parse(ting);
-    const decodedProof = Buffer.from(ting["proof"], "base64");
-    return decodedProof;
-  }
+          throw new Error("Network response was not ok");
+        }
+        console.log("Here:", response);
+        return response.text();
+      })
+      .then((data) => {
+        const parsedData = JSON.parse(data);
+        console.log(data);
+        const decodedProof = Buffer.from(parsedData["proof"], "base64");
+        console.log("DecodedProof:", decodedProof);
+        return decodedProof;
+      })
+      .catch((error) => {
+        console.error("Error during POST request:", error);
+      });
+  };
 });

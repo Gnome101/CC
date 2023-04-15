@@ -90,7 +90,6 @@ contract CookieClicker {
     uint256 public timeSpent;
 
     function submitCaptcha(bytes memory proof) public {
-        require(userCaptchaStart[msg.sender] > 0);
         require(zkaptcha.verifyZkProof(proof));
         timeSpent = block.timestamp - userCaptchaStart[msg.sender];
     }

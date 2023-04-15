@@ -14,8 +14,8 @@ const MAINNET_RPC_URL =
   process.env.MAINNET_RPC_URL ||
   process.env.ALCHEMY_MAINNET_RPC_URL ||
   "https://eth-mainnet.alchemyapi.io/v2/your-api-key";
-const RINKEBY_RPC_URL =
-  process.env.RINKEBY_RPC_URL ||
+const GOERLI_RPC_URL =
+  process.env.GOERLI_RPC_URL ||
   "https://eth-rinkeby.alchemyapi.io/v2/your-api-key";
 
 const POLYGON_MAINNET_RPC_URL =
@@ -42,14 +42,14 @@ module.exports = {
     localhost: {
       chainId: 31337,
     },
-    rinkeby: {
-      url: RINKEBY_RPC_URL,
+    goerli: {
+      url: GOERLI_RPC_URL,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       //   accounts: {
       //     mnemonic: MNEMONIC,
       //   },
       saveDeployments: true,
-      chainId: 4,
+      chainId: 5,
     },
   },
   etherscan: {

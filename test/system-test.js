@@ -156,21 +156,7 @@ describe("Cookie Clicker ", function () {
         console.log((await cookieClicker.timeSpent()).toString());
         // rough sketch of sending args to the prover
       });
-      const readline = require("readline");
-
-      function askQuestion(query) {
-        const rl = readline.createInterface({
-          input: process.stdin,
-          output: process.stdout,
-        });
-
-        return new Promise((resolve) =>
-          rl.question(query, (ans) => {
-            rl.close();
-            resolve(ans);
-          })
-        );
-      }
+      it("user can mint a bond", async () => {});
     });
   });
   async function clickThisMany(num) {
@@ -196,9 +182,23 @@ describe("Cookie Clicker ", function () {
       return null;
     }
   }
+  const readline = require("readline");
+
+  function askQuestion(query) {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    return new Promise((resolve) =>
+      rl.question(query, (ans) => {
+        rl.close();
+        resolve(ans);
+      })
+    );
+  }
   // rough sketch of sending args to the prover
-  // rough sketch of sending args to the prover
-  // rough sketch of sending args to the prover
+
   const proverAPI =
     "https://urrc4cdvzg.execute-api.us-east-2.amazonaws.com/default/zkaptchaprover";
   const getProof = async (pkey, captcha_text) => {

@@ -18,8 +18,12 @@ const GOERLI_RPC_URL =
   process.env.GOERLI_RPC_URL ||
   "https://eth-rinkeby.alchemyapi.io/v2/your-api-key";
 
-const POLYGON_MAINNET_RPC_URL =
-  process.env.POLYGON_MAINNET_RPC_URL ||
+const SEPOLIA_RPC_URL =
+  process.env.SEPOLIA_RPC_URL ||
+  "https://polygon-mainnet.alchemyapi.io/v2/your-api-key";
+
+const ARB_GOERLI_RPC_URL =
+  process.env.ARB_GOERLI_RPC_URL ||
   "https://polygon-mainnet.alchemyapi.io/v2/your-api-key";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x";
 // optional
@@ -51,6 +55,24 @@ module.exports = {
       saveDeployments: true,
       chainId: 5,
     },
+    sepolia: {
+      url: SEPOLIA_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      //   accounts: {
+      //     mnemonic: MNEMONIC,
+      //   },
+      saveDeployments: true,
+      chainId: 11155111,
+    },
+    arb_goerli: {
+      url: ARB_GOERLI_RPC_URL,
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+      //   accounts: {
+      //     mnemonic: MNEMONIC,
+      //   },
+      saveDeployments: true,
+      chainId: 421613,
+    },
   },
   etherscan: {
     // yarn hardhat verify --network <NETWORK> <CONTRACT_ADDRESS> <CONSTRUCTOR_PARAMETERS>
@@ -77,7 +99,19 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.18",
+        version: "0.7.0",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 2000,
+            details: {
+              yul: true,
+            },
+          },
+        },
+      },
+      {
+        version: "0.7.6",
         settings: {
           optimizer: {
             enabled: true,

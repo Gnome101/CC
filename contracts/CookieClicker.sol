@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.18;
+import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import "@uniswap/v3-periphery/contracts/libraries/PositionValue.sol";
+import "@uniswap/v3-periphery/contracts/libraries/LiquidityAmounts.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+pragma solidity ^0.7.0;
+pragma abicoder v2;
 //Users can upgrade their cookie and earn more
 //For example, a user can do a cursor upgrade and earn 0.1 cookies per second
 //Users are given an ERC20 token called cookies(right now just points)
@@ -12,6 +18,9 @@ interface ZKaptchaInterface {
 contract CookieClicker {
     address immutable dev;
     ZKaptchaInterface immutable zkaptcha;
+    address public immutable captchaContract;
+    event captchaNeededForUser(address indexed user);
+
     modifier sessionStarted(address user) {
         //The game only works if a session was started
         require(block.timestamp <= mostRecentUserSession[user].expiraryDate);
@@ -23,21 +32,29 @@ contract CookieClicker {
         require(msg.sender == dev);
         _;
     }
+    modifier userHasStarted(address user) {
+        if (userCookie[user].interestLastComputed == 0) {
+            //If user has not started, then give set them at current timestamp
+            userCookie[user].interestLastComputed = block.timestamp;
+        }
+        _;
+    }
 
     // implement ZKaptcha anti-bot in your smart contract
 
-    constructor() {
+    constructor(address captchaAddy) {
         dev = msg.sender;
         idToUpgrade[1] = Upgrade(10, 1, 0);
         idToUpgrade[2] = Upgrade(10, 0, 1);
         zkaptcha = ZKaptchaInterface(
             0xf5DCa59461adFFF5089BE5068364eC10B86c2a88
         );
+        captchaContract = captchaAddy;
     }
 
     mapping(address => cookieGame) public userCookie;
     mapping(address => GameSession) public mostRecentUserSession;
-
+    uint256 public d;
     mapping(uint256 => Upgrade) public idToUpgrade;
     mapping(address => mapping(uint256 => uint256)) public idUserToNum; //Tracks the number of purchases of a single upgrade
 
@@ -62,12 +79,12 @@ contract CookieClicker {
         uint256 clickModiferBooster;
     }
 
-    function createCookie() public {
+    function createCookie() public userHasStarted(msg.sender) {
         //Make sure user does block.timestamp first
         userCookie[msg.sender] = cookieGame(0, 0, 0, block.timestamp, 0);
     }
 
-    function click() public {
+    function click() public userHasStarted(msg.sender) {
         userCookie[msg.sender].totalClicks +=
             1 +
             userCookie[msg.sender].clickModifier;
@@ -83,15 +100,19 @@ contract CookieClicker {
 
     mapping(address => uint256) userCaptchaStart;
 
-    function giveUserCaptcha(address user) public onlyDev {
-        userCaptchaStart[user] = block.timestamp;
+    function callForCaptcha(address user) public onlyDev {
+        //emit event()
+        emit captchaNeededForUser(user);
     }
 
-    uint256 public timeSpent;
-
-    function submitCaptcha(bytes memory proof) public {
-        require(zkaptcha.verifyZkProof(proof));
-        timeSpent = block.timestamp - userCaptchaStart[msg.sender];
+    function confirmCaptcha(
+        address user,
+        uint256 timeStarted,
+        uint256 timeEnded
+    ) public onlyDev {
+        mostRecentUserSession[user].sessionGame.totalSpent =
+            (timeEnded - timeStarted) *
+            10;
     }
 
     function addClick(
@@ -171,7 +192,10 @@ contract CookieClicker {
             interestEarned;
     }
 
-    function startSession(bytes32 createdHash, uint256 sessionLength) public {
+    function startSession(
+        bytes32 createdHash,
+        uint256 sessionLength
+    ) public userHasStarted(msg.sender) {
         mostRecentUserSession[msg.sender].sessionHash = createdHash;
         mostRecentUserSession[msg.sender].expiraryDate =
             block.timestamp +
@@ -236,5 +260,36 @@ contract CookieClicker {
         userCookie[userAddress].interestLastComputed = block.timestamp; //Resetting interest
 
         delete mostRecentUserSession[userAddress];
+    }
+    function redeedCookie(uint256 amount) public {
+        
+    }
+    //Need to save the pool somewhere
+    struct positionInfo {
+        int24 lowerBound;
+        int24 upperBound;
+        uint256 token0Amount;
+        uint256 token1Amount;
+    }
+    function buyBond(uint256 cookieAmount, uint256 stableAmount, ) public {
+        //Transfer both tokens from user
+        jsInfo.userToken.transferFrom(msg.sender, address(this), cookieAmount);
+        jsInfo.userToken.transferFrom(msg.sender, address(this), stableAmount);
+        //Use the mint params to create position
+        INonfungiblePositionManager.MintParams
+            memory params = INonfungiblePositionManager.MintParams({
+                token0: IUniswapV3Pool(positonInfo.desiredPool).token0(),
+                token1: IUniswapV3Pool(positonInfo.desiredPool).token1(),
+                fee: IUniswapV3Pool(positonInfo.desiredPool).fee(),
+                tickLower: positonInfo.lowerBound,
+                tickUpper: positonInfo.upperBound,
+                amount0Desired: jsInfo.goalToken0,
+                amount1Desired: jsInfo.goalToken1,
+                amount0Min: 0,
+                amount1Min: 0,
+                recipient: address(this),
+                deadline: block.timestamp + 1000000
+            });
+        //Mint the position with the NFT
     }
 }

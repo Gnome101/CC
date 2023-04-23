@@ -1,16 +1,27 @@
 {
-  "address": "0x8c34FbD43039beE94338272db4B67223929Df53e",
+  "address": "0xbaE442a9249f0A6fc45C907e616094cec1D42421",
   "abi": [
     {
       "inputs": [
         {
           "internalType": "address",
-          "name": "captchaAddy",
+          "name": "novaMailboxAddy",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "novaGasAddy",
           "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "Handled",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -26,44 +37,13 @@
       "type": "event"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "clickAmount",
-          "type": "uint256"
-        }
-      ],
-      "name": "addClick",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        }
-      ],
-      "name": "callForCaptcha",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
-      "name": "captchaContract",
+      "name": "arbGoerliDomainID",
       "outputs": [
         {
-          "internalType": "address",
+          "internalType": "uint32",
           "name": "",
-          "type": "address"
+          "type": "uint32"
         }
       ],
       "stateMutability": "view",
@@ -90,29 +70,6 @@
         }
       ],
       "name": "completeSession",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "timeStarted",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "timeEnded",
-          "type": "uint256"
-        }
-      ],
-      "name": "confirmCaptcha",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -150,22 +107,33 @@
     },
     {
       "inputs": [],
-      "name": "d",
+      "name": "endSession",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_destinationDomain",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_gasAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "getGasQuote",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "quotedPayment",
           "type": "uint256"
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "endSession",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -223,6 +191,42 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "giveUserCaptcha",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_origin",
+          "type": "uint32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_sender",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_message",
+          "type": "bytes"
+        }
+      ],
+      "name": "handle",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -376,6 +380,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "response",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -410,6 +427,37 @@
       "name": "startSession",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "proof",
+          "type": "bytes"
+        },
+        {
+          "internalType": "address",
+          "name": "captchaContract",
+          "type": "address"
+        }
+      ],
+      "name": "submitCaptcha",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "timeSpent",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -476,30 +524,31 @@
       "type": "function"
     }
   ],
-  "transactionHash": "0xbb4087a65d22d796fb397ca50ac7a6d950059a07d100fae600ec0695439f0d84",
+  "transactionHash": "0x5e4ee875477a72dfb7c558927d968db10143b6ca10ce4e71b05760179349784e",
   "receipt": {
     "to": null,
     "from": "0x19d96301865fdD07427db3c445508A051BC6D352",
-    "contractAddress": "0x8c34FbD43039beE94338272db4B67223929Df53e",
-    "transactionIndex": 37,
-    "gasUsed": "1058752",
+    "contractAddress": "0xbaE442a9249f0A6fc45C907e616094cec1D42421",
+    "transactionIndex": 31,
+    "gasUsed": "1352616",
     "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-    "blockHash": "0x7fda351fd089fff61195d10fba1e121c8402ca423bd1f3f6ec3907e7ea64b64c",
-    "transactionHash": "0xbb4087a65d22d796fb397ca50ac7a6d950059a07d100fae600ec0695439f0d84",
+    "blockHash": "0x4ef59c97b7b8b871f81a770241bb7840855b7d25bf3cbbe5ae9978652462c788",
+    "transactionHash": "0x5e4ee875477a72dfb7c558927d968db10143b6ca10ce4e71b05760179349784e",
     "logs": [],
-    "blockNumber": 8838564,
-    "cumulativeGasUsed": "8340351",
+    "blockNumber": 8870762,
+    "cumulativeGasUsed": "3513386",
     "status": 1,
     "byzantium": true
   },
   "args": [
-    "0x963C7950B97e2ce301Eb49Fb1928aA5C7fe8e8eC"
+    "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+    "0xF90cB82a76492614D07B82a7658917f3aC811Ac1"
   ],
-  "numDeployments": 1,
-  "solcInputHash": "febbca65db1fb438a94b8c79da958bca",
-  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"captchaAddy\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"captchaNeededForUser\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"clickAmount\",\"type\":\"uint256\"}],\"name\":\"addClick\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"callForCaptcha\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"captchaContract\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"click\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"completeSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"timeStarted\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"timeEnded\",\"type\":\"uint256\"}],\"name\":\"confirmCaptcha\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"createCookie\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddy\",\"type\":\"address\"}],\"name\":\"createHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"newHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"d\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"endSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getSessionUserInterest\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"interestEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserCookieBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cookieBalance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserInterest\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"interestEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"idToUpgrade\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cost\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookieRateBooster\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModiferBooster\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"idUserToNum\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"mostRecentUserSession\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"expiraryDate\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"sessionActive\",\"type\":\"bool\"},{\"internalType\":\"bytes32\",\"name\":\"sessionHash\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"totalClicks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalSpent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookiePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"interestLastComputed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModifier\",\"type\":\"uint256\"}],\"internalType\":\"struct CookieClicker.cookieGame\",\"name\":\"sessionGame\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"userInterest\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"upgradeID\",\"type\":\"uint256\"}],\"name\":\"purchaseUpgrade\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"upgradeID\",\"type\":\"uint256\"}],\"name\":\"purchaseUpgradeForUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"simulateClick\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"clickAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"createdHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"sessionLength\",\"type\":\"uint256\"}],\"name\":\"startSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userCookie\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalClicks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalSpent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookiePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"interestLastComputed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModifier\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddy\",\"type\":\"address\"}],\"name\":\"verifySession\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/CookieClicker.sol\":\"CookieClicker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":2000},\"remappings\":[]},\"sources\":{\"contracts/CookieClicker.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity 0.8.18;\\n\\n//Users can upgrade their cookie and earn more\\n//For example, a user can do a cursor upgrade and earn 0.1 cookies per second\\n//Users are given an ERC20 token called cookies(right now just points)\\ninterface ZKaptchaInterface {\\n    function verifyZkProof(bytes calldata zkProof) external view returns (bool);\\n}\\n\\ncontract CookieClicker {\\n    address immutable dev;\\n    ZKaptchaInterface immutable zkaptcha;\\n    address public immutable captchaContract;\\n    event captchaNeededForUser(address indexed user);\\n\\n    modifier sessionStarted(address user) {\\n        //The game only works if a session was started\\n        require(block.timestamp <= mostRecentUserSession[user].expiraryDate);\\n        require(mostRecentUserSession[user].sessionActive);\\n        _;\\n    }\\n    modifier onlyDev() {\\n        //The game only works if a session was started\\n        require(msg.sender == dev);\\n        _;\\n    }\\n\\n    // implement ZKaptcha anti-bot in your smart contract\\n\\n    constructor(address captchaAddy) {\\n        dev = msg.sender;\\n        idToUpgrade[1] = Upgrade(10, 1, 0);\\n        idToUpgrade[2] = Upgrade(10, 0, 1);\\n        zkaptcha = ZKaptchaInterface(\\n            0xf5DCa59461adFFF5089BE5068364eC10B86c2a88\\n        );\\n        captchaContract = captchaAddy;\\n    }\\n\\n    mapping(address => cookieGame) public userCookie;\\n    mapping(address => GameSession) public mostRecentUserSession;\\n    uint256 public d;\\n    mapping(uint256 => Upgrade) public idToUpgrade;\\n    mapping(address => mapping(uint256 => uint256)) public idUserToNum; //Tracks the number of purchases of a single upgrade\\n\\n    struct cookieGame {\\n        uint256 totalClicks;\\n        uint256 totalSpent;\\n        uint256 cookiePerSecond; //Users can earn more per second\\n        uint256 interestLastComputed;\\n        uint256 clickModifier;\\n    }\\n    struct GameSession {\\n        uint256 expiraryDate;\\n        bool sessionActive;\\n        bytes32 sessionHash;\\n        cookieGame sessionGame;\\n        uint256 userInterest;\\n    }\\n    struct Upgrade {\\n        //Turn into NFT in future\\n        uint256 cost;\\n        uint256 cookieRateBooster;\\n        uint256 clickModiferBooster;\\n    }\\n\\n    function createCookie() public {\\n        //Make sure user does block.timestamp first\\n        userCookie[msg.sender] = cookieGame(0, 0, 0, block.timestamp, 0);\\n    }\\n\\n    function click() public {\\n        userCookie[msg.sender].totalClicks +=\\n            1 +\\n            userCookie[msg.sender].clickModifier;\\n    }\\n\\n    function simulateClick(\\n        address user\\n    ) public view returns (uint256 clickAmount) {\\n        clickAmount +=\\n            1 +\\n            mostRecentUserSession[user].sessionGame.clickModifier;\\n    }\\n\\n    mapping(address => uint256) userCaptchaStart;\\n\\n    function callForCaptcha(address user) public onlyDev {\\n        //emit event()\\n        emit captchaNeededForUser(user);\\n    }\\n\\n    function confirmCaptcha(\\n        address user,\\n        uint256 timeStarted,\\n        uint256 timeEnded\\n    ) public onlyDev {\\n        mostRecentUserSession[user].sessionGame.totalSpent =\\n            (timeEnded - timeStarted) *\\n            10;\\n    }\\n\\n    function addClick(\\n        address user,\\n        uint256 clickAmount\\n    ) public sessionStarted(user) {\\n        mostRecentUserSession[user].sessionGame.totalClicks += clickAmount;\\n    }\\n\\n    //Might make it so that a user has to send a transaction when they purchase an upgrade\\n    //Whenever a user purchases a cookie, the program adds up their interest\\n    function purchaseUpgrade(uint256 upgradeID) public {\\n        idUserToNum[msg.sender][upgradeID]++;\\n        uint256 cookieBalance = getUserCookieBalance(msg.sender);\\n        userCookie[msg.sender].interestLastComputed = block.timestamp;\\n        require(cookieBalance >= idToUpgrade[upgradeID].cost);\\n        userCookie[msg.sender].totalSpent +=\\n            idToUpgrade[upgradeID].cost *\\n            idUserToNum[msg.sender][upgradeID];\\n        userCookie[msg.sender].cookiePerSecond += idToUpgrade[upgradeID]\\n            .cookieRateBooster;\\n        userCookie[msg.sender].clickModifier += idToUpgrade[upgradeID]\\n            .clickModiferBooster;\\n    }\\n\\n    function purchaseUpgradeForUser(\\n        address user,\\n        uint256 upgradeID\\n    ) public onlyDev {\\n        //We are going to be applying a debt to the user\\n        idUserToNum[msg.sender][upgradeID]++;\\n        require(idToUpgrade[upgradeID].cost > 0, \\\"Not Real ID\\\");\\n        mostRecentUserSession[user].sessionGame.totalSpent +=\\n            idToUpgrade[upgradeID].cost *\\n            idUserToNum[msg.sender][upgradeID];\\n        mostRecentUserSession[user].userInterest = getSessionUserInterest(user);\\n\\n        //require(cookieBalance >= idToUpgrade[upgradeID].cost);\\n        mostRecentUserSession[user].sessionGame.cookiePerSecond += idToUpgrade[\\n            upgradeID\\n        ].cookieRateBooster;\\n        mostRecentUserSession[user].sessionGame.clickModifier += idToUpgrade[\\n            upgradeID\\n        ].clickModiferBooster;\\n        userCookie[user].interestLastComputed = block.timestamp; //Resetting interest\\n    }\\n\\n    function getSessionUserInterest(\\n        address user\\n    ) public view returns (uint256 interestEarned) {\\n        uint256 timePassed = block.timestamp -\\n            userCookie[user].interestLastComputed;\\n\\n        interestEarned =\\n            timePassed *\\n            mostRecentUserSession[user].sessionGame.cookiePerSecond;\\n    }\\n\\n    function getUserInterest(\\n        address user\\n    ) public view returns (uint256 interestEarned) {\\n        uint256 timePassed = block.timestamp -\\n            userCookie[user].interestLastComputed;\\n\\n        interestEarned = timePassed * userCookie[user].cookiePerSecond;\\n        if (mostRecentUserSession[user].sessionActive) interestEarned = 0; //If there is already a session then dont count regular interest NO DOUBLE DIPPING\\n    }\\n\\n    function getUserCookieBalance(\\n        address user\\n    ) public view returns (uint256 cookieBalance) {\\n        cookieGame memory currentGame = userCookie[user];\\n        uint256 interestEarned = getUserInterest(user);\\n        cookieBalance =\\n            currentGame.totalClicks -\\n            currentGame.totalSpent +\\n            interestEarned;\\n    }\\n\\n    function startSession(bytes32 createdHash, uint256 sessionLength) public {\\n        mostRecentUserSession[msg.sender].sessionHash = createdHash;\\n        mostRecentUserSession[msg.sender].expiraryDate =\\n            block.timestamp +\\n            sessionLength;\\n        //Set the session cookie rate as the users current rate\\n        mostRecentUserSession[msg.sender]\\n            .sessionGame\\n            .cookiePerSecond = userCookie[msg.sender].cookiePerSecond;\\n        //Set the session click modifier as the user's current modifier\\n        mostRecentUserSession[msg.sender]\\n            .sessionGame\\n            .clickModifier = userCookie[msg.sender].clickModifier;\\n\\n        mostRecentUserSession[msg.sender].sessionActive = true;\\n    }\\n\\n    function createHash(\\n        uint256 browserID,\\n        address userAddy\\n    ) public pure returns (bytes32 newHash) {\\n        newHash = keccak256(abi.encodePacked(browserID, userAddy));\\n    }\\n\\n    function verifySession(\\n        uint256 browserID, //We can make this bytes\\n        address userAddy\\n    ) public view returns (bool valid) {\\n        valid = mostRecentUserSession[userAddy].sessionHash ==\\n            keccak256(abi.encodePacked(browserID, userAddy))\\n            ? true\\n            : false;\\n    }\\n\\n    function endSession() public {\\n        //Allows a user to end a session and prevent it from happening\\n        mostRecentUserSession[msg.sender].sessionActive = false;\\n        //We could have an event fire off or something\\n    }\\n\\n    function completeSession(\\n        uint256 browserID,\\n        address userAddress\\n    ) public onlyDev sessionStarted(userAddress) {\\n        require(verifySession(browserID, userAddress));\\n        userCookie[userAddress].totalClicks += mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.totalClicks;\\n        uint256 userDebt = mostRecentUserSession[userAddress]\\n            .sessionGame\\n            .totalSpent;\\n        uint256 userInterest = mostRecentUserSession[userAddress].userInterest;\\n\\n        require(getUserCookieBalance(userAddress) + userInterest >= userDebt);\\n        userCookie[userAddress].totalSpent += userDebt;\\n        userCookie[userAddress].clickModifier = mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.clickModifier;\\n        userCookie[userAddress].cookiePerSecond = mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.cookiePerSecond;\\n        mostRecentUserSession[userAddress].sessionActive = false;\\n        userCookie[userAddress].interestLastComputed = block.timestamp; //Resetting interest\\n\\n        delete mostRecentUserSession[userAddress];\\n    }\\n}\\n\",\"keccak256\":\"0x0264992689e3cb6327bde99e48d8c035f3275496cfa0d3d8c001e006620348b9\",\"license\":\"MIT\"}},\"version\":1}",
-  "bytecode": "0x60e060405234801561001057600080fd5b5060405161125338038061125383398101604081905261002f9161017a565b336080526040805160608082018352600a808352600160208085018281526000868801818152848252600380855297517fa15bc60c955c405d20d9149c709e2460f1c2d9a497496a7f46004d1772c3054c5591517fa15bc60c955c405d20d9149c709e2460f1c2d9a497496a7f46004d1772c3054d5590517fa15bc60c955c405d20d9149c709e2460f1c2d9a497496a7f46004d1772c3054e55865194850187529284528381018381529584019182526002909252929052517fc3a24b0501bd2c13a7e57f2db4369ec4c223447539fc0724a9d55ac4a06ebd4d5590517fc3a24b0501bd2c13a7e57f2db4369ec4c223447539fc0724a9d55ac4a06ebd4e55517fc3a24b0501bd2c13a7e57f2db4369ec4c223447539fc0724a9d55ac4a06ebd4f5573f5dca59461adfff5089be5068364ec10b86c2a8860a0526001600160a01b031660c0526101aa565b60006020828403121561018c57600080fd5b81516001600160a01b03811681146101a357600080fd5b9392505050565b60805160a05160c0516110686101eb6000396000610300015260005050600081816106a801528181610975015281816109e10152610c3501526110686000f3fe608060405234801561001057600080fd5b50600436106101825760003560e01c8063c79423fc116100d8578063e237a3fc1161008c578063e8a8e23111610066578063e8a8e231146104d7578063e927740b146104ea578063e97ff4e0146104fd57600080fd5b8063e237a3fc1461045a578063e36840dd1461047a578063e55a9ddf1461048d57600080fd5b8063d1159051116100bd578063d115905114610386578063e0fc5870146103eb578063e1b1a214146103fe57600080fd5b8063c79423fc14610360578063cd2346721461037357600080fd5b80638a054ac21161013a57806394f41a881161011457806394f41a88146102fb578063ad8150781461033a578063bf8853c61461034d57600080fd5b80638a054ac2146102cc5780638fa5cbc3146102d557806394d1441c146102e857600080fd5b80636e6114001161016b5780636e611400146101da578063769edf6a146102b15780637d55923d146102c457600080fd5b806301ad14db1461018757806312a049661461019c575b600080fd5b61019a610195366004610eaf565b610520565b005b6101c76101aa366004610eaf565b600460209081526000928352604080842090915290825290205481565b6040519081526020015b60405180910390f35b6102546101e8366004610ed9565b6001602081815260009283526040928390208054928101546002820154855160a081018752600384015481526004840154948101949094526005830154958401959095526006820154606084015260078201546080840152600890910154929360ff9091169290919085565b60408051958652931515602080870191909152858501939093528151606080870191909152928201516080808701919091529382015160a08601529181015160c0850152919091015160e0830152610100820152610120016101d1565b6101c76102bf366004610ef4565b6105a5565b61019a6105f3565b6101c760025481565b61019a6102e3366004610f20565b610637565b61019a6102f6366004610eaf565b61069d565b6103227f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b0390911681526020016101d1565b6101c7610348366004610ed9565b61088e565b6101c761035b366004610ed9565b6108e6565b61019a61036e366004610ed9565b61096a565b61019a610381366004610f42565b6109d6565b6103c3610394366004610ed9565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a0016101d1565b61019a6103f9366004610f75565b610a44565b61019a6040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b61019a33600090815260016020819052604090912001805460ff19169055565b6101c7610488366004610ed9565b610b70565b6104bc61049b366004610f75565b60036020526000908152604090208054600182015460029092015490919083565b604080519384526020840192909252908201526060016101d1565b6101c76104e5366004610ed9565b610bf3565b61019a6104f8366004610ef4565b610c2a565b61051061050b366004610ef4565b610dfe565b60405190151581526020016101d1565b6001600160a01b038216600090815260016020526040902054829042111561054757600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff1661057057600080fd5b6001600160a01b0383166000908152600160205260408120600301805484929061059b908490610fbd565b9091555050505050565b600082826040516020016105d592919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60405160208183030381529060405280519060200120905092915050565b33600090815260208190526040902060040154610611906001610fbd565b3360009081526020819052604081208054909190610630908490610fbd565b9091555050565b3360009081526001602052604090206002018290556106568142610fbd565b3360009081526001602081815260408084209485558382529092206002810154600585015560040154918190526007830191909155908101805460ff191690911790555050565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146106d257600080fd5b33600090815260046020908152604080832084845290915281208054916106f883610fd0565b9091555050600081815260036020526040902054610776576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600b60248201527f4e6f74205265616c204944000000000000000000000000000000000000000000604482015260640160405180910390fd5b3360009081526004602090815260408083208484528252808320546003909252909120546107a49190611008565b6001600160a01b038316600090815260016020526040812060040180549091906107cf908490610fbd565b909155506107de90508261088e565b6001600160a01b03831660008181526001602081815260408084206008810196909655868452600382528320820154938352526005909201805491929091610827908490610fbd565b90915550506000818152600360209081526040808320600201546001600160a01b038616845260019092528220600701805491929091610868908490610fbd565b9091555050506001600160a01b0316600090815260208190526040902042600390910155565b6001600160a01b03811660009081526020819052604081206003015481906108b6904261101f565b6001600160a01b0384166000908152600160205260409020600501549091506108df9082611008565b9392505050565b6001600160a01b038116600090815260208190526040812060030154819061090e904261101f565b6001600160a01b0384166000908152602081905260409020600201549091506109379082611008565b6001600160a01b0384166000908152600160208190526040909120015490925060ff161561096457600091505b50919050565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461099f57600080fd5b6040516001600160a01b038216907fdc5293c985ffbfee788e4bae0eebc5de237c91c5918a782fdcaa2fd661374ae290600090a250565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610a0b57600080fd5b610a15828261101f565b610a2090600a611008565b6001600160a01b039093166000908152600160205260409020600401929092555050565b3360009081526004602090815260408083208484529091528120805491610a6a83610fd0565b91905055506000610a7a33610b70565b3360009081526020818152604080832042600391820155868452909152902054909150811015610aa957600080fd5b336000908152600460209081526040808320858452825280832054600390925290912054610ad79190611008565b3360009081526020819052604081206001018054909190610af9908490610fbd565b9091555050600082815260036020908152604080832060010154338452918390528220600201805491929091610b30908490610fbd565b9091555050600082815260036020908152604080832060020154338452918390528220600401805491929091610b67908490610fbd565b90915550505050565b6001600160a01b038116600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083015260040154608082015281610bca846108e6565b90508082602001518360000151610be1919061101f565b610beb9190610fbd565b949350505050565b6001600160a01b0381166000908152600160208190526040822060070154610c1a91610fbd565b610c249082610fbd565b92915050565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610c5f57600080fd5b6001600160a01b0381166000908152600160205260409020548190421115610c8657600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff16610caf57600080fd5b610cb98383610dfe565b610cc257600080fd5b6001600160a01b038216600090815260016020908152604080832060030154918390528220805491929091610cf8908490610fbd565b90915550506001600160a01b038216600090815260016020526040902060048101546008909101548181610d2b86610b70565b610d359190610fbd565b1015610d4057600080fd5b6001600160a01b03841660009081526020819052604081206001018054849290610d6b908490610fbd565b9091555050506001600160a01b039092166000908152600160208181526040808420600781018054868552928620600481810194909455600583018054600280840191909155848801805460ff1990811682554260039586015598909752888555865490971690955594820186905593810185905590810184905590839055600681018390559082905560080155505050565b60008282604051602001610e2e92919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b604080517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe081840301815291815281516020928301206001600160a01b0385166000908152600190935291206002015414610e8a5760006108df565b60019392505050565b80356001600160a01b0381168114610eaa57600080fd5b919050565b60008060408385031215610ec257600080fd5b610ecb83610e93565b946020939093013593505050565b600060208284031215610eeb57600080fd5b6108df82610e93565b60008060408385031215610f0757600080fd5b82359150610f1760208401610e93565b90509250929050565b60008060408385031215610f3357600080fd5b50508035926020909101359150565b600080600060608486031215610f5757600080fd5b610f6084610e93565b95602085013595506040909401359392505050565b600060208284031215610f8757600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b80820180821115610c2457610c24610f8e565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361100157611001610f8e565b5060010190565b8082028115828204841417610c2457610c24610f8e565b81810381811115610c2457610c24610f8e56fea2646970667358221220f5ed46cea3cd887a4f30237e088faa93092ef91388411a47ab522d851f92391e64736f6c63430008120033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106101825760003560e01c8063c79423fc116100d8578063e237a3fc1161008c578063e8a8e23111610066578063e8a8e231146104d7578063e927740b146104ea578063e97ff4e0146104fd57600080fd5b8063e237a3fc1461045a578063e36840dd1461047a578063e55a9ddf1461048d57600080fd5b8063d1159051116100bd578063d115905114610386578063e0fc5870146103eb578063e1b1a214146103fe57600080fd5b8063c79423fc14610360578063cd2346721461037357600080fd5b80638a054ac21161013a57806394f41a881161011457806394f41a88146102fb578063ad8150781461033a578063bf8853c61461034d57600080fd5b80638a054ac2146102cc5780638fa5cbc3146102d557806394d1441c146102e857600080fd5b80636e6114001161016b5780636e611400146101da578063769edf6a146102b15780637d55923d146102c457600080fd5b806301ad14db1461018757806312a049661461019c575b600080fd5b61019a610195366004610eaf565b610520565b005b6101c76101aa366004610eaf565b600460209081526000928352604080842090915290825290205481565b6040519081526020015b60405180910390f35b6102546101e8366004610ed9565b6001602081815260009283526040928390208054928101546002820154855160a081018752600384015481526004840154948101949094526005830154958401959095526006820154606084015260078201546080840152600890910154929360ff9091169290919085565b60408051958652931515602080870191909152858501939093528151606080870191909152928201516080808701919091529382015160a08601529181015160c0850152919091015160e0830152610100820152610120016101d1565b6101c76102bf366004610ef4565b6105a5565b61019a6105f3565b6101c760025481565b61019a6102e3366004610f20565b610637565b61019a6102f6366004610eaf565b61069d565b6103227f000000000000000000000000000000000000000000000000000000000000000081565b6040516001600160a01b0390911681526020016101d1565b6101c7610348366004610ed9565b61088e565b6101c761035b366004610ed9565b6108e6565b61019a61036e366004610ed9565b61096a565b61019a610381366004610f42565b6109d6565b6103c3610394366004610ed9565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a0016101d1565b61019a6103f9366004610f75565b610a44565b61019a6040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b61019a33600090815260016020819052604090912001805460ff19169055565b6101c7610488366004610ed9565b610b70565b6104bc61049b366004610f75565b60036020526000908152604090208054600182015460029092015490919083565b604080519384526020840192909252908201526060016101d1565b6101c76104e5366004610ed9565b610bf3565b61019a6104f8366004610ef4565b610c2a565b61051061050b366004610ef4565b610dfe565b60405190151581526020016101d1565b6001600160a01b038216600090815260016020526040902054829042111561054757600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff1661057057600080fd5b6001600160a01b0383166000908152600160205260408120600301805484929061059b908490610fbd565b9091555050505050565b600082826040516020016105d592919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60405160208183030381529060405280519060200120905092915050565b33600090815260208190526040902060040154610611906001610fbd565b3360009081526020819052604081208054909190610630908490610fbd565b9091555050565b3360009081526001602052604090206002018290556106568142610fbd565b3360009081526001602081815260408084209485558382529092206002810154600585015560040154918190526007830191909155908101805460ff191690911790555050565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146106d257600080fd5b33600090815260046020908152604080832084845290915281208054916106f883610fd0565b9091555050600081815260036020526040902054610776576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600b60248201527f4e6f74205265616c204944000000000000000000000000000000000000000000604482015260640160405180910390fd5b3360009081526004602090815260408083208484528252808320546003909252909120546107a49190611008565b6001600160a01b038316600090815260016020526040812060040180549091906107cf908490610fbd565b909155506107de90508261088e565b6001600160a01b03831660008181526001602081815260408084206008810196909655868452600382528320820154938352526005909201805491929091610827908490610fbd565b90915550506000818152600360209081526040808320600201546001600160a01b038616845260019092528220600701805491929091610868908490610fbd565b9091555050506001600160a01b0316600090815260208190526040902042600390910155565b6001600160a01b03811660009081526020819052604081206003015481906108b6904261101f565b6001600160a01b0384166000908152600160205260409020600501549091506108df9082611008565b9392505050565b6001600160a01b038116600090815260208190526040812060030154819061090e904261101f565b6001600160a01b0384166000908152602081905260409020600201549091506109379082611008565b6001600160a01b0384166000908152600160208190526040909120015490925060ff161561096457600091505b50919050565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461099f57600080fd5b6040516001600160a01b038216907fdc5293c985ffbfee788e4bae0eebc5de237c91c5918a782fdcaa2fd661374ae290600090a250565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610a0b57600080fd5b610a15828261101f565b610a2090600a611008565b6001600160a01b039093166000908152600160205260409020600401929092555050565b3360009081526004602090815260408083208484529091528120805491610a6a83610fd0565b91905055506000610a7a33610b70565b3360009081526020818152604080832042600391820155868452909152902054909150811015610aa957600080fd5b336000908152600460209081526040808320858452825280832054600390925290912054610ad79190611008565b3360009081526020819052604081206001018054909190610af9908490610fbd565b9091555050600082815260036020908152604080832060010154338452918390528220600201805491929091610b30908490610fbd565b9091555050600082815260036020908152604080832060020154338452918390528220600401805491929091610b67908490610fbd565b90915550505050565b6001600160a01b038116600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083015260040154608082015281610bca846108e6565b90508082602001518360000151610be1919061101f565b610beb9190610fbd565b949350505050565b6001600160a01b0381166000908152600160208190526040822060070154610c1a91610fbd565b610c249082610fbd565b92915050565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610c5f57600080fd5b6001600160a01b0381166000908152600160205260409020548190421115610c8657600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff16610caf57600080fd5b610cb98383610dfe565b610cc257600080fd5b6001600160a01b038216600090815260016020908152604080832060030154918390528220805491929091610cf8908490610fbd565b90915550506001600160a01b038216600090815260016020526040902060048101546008909101548181610d2b86610b70565b610d359190610fbd565b1015610d4057600080fd5b6001600160a01b03841660009081526020819052604081206001018054849290610d6b908490610fbd565b9091555050506001600160a01b039092166000908152600160208181526040808420600781018054868552928620600481810194909455600583018054600280840191909155848801805460ff1990811682554260039586015598909752888555865490971690955594820186905593810185905590810184905590839055600681018390559082905560080155505050565b60008282604051602001610e2e92919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b604080517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe081840301815291815281516020928301206001600160a01b0385166000908152600190935291206002015414610e8a5760006108df565b60019392505050565b80356001600160a01b0381168114610eaa57600080fd5b919050565b60008060408385031215610ec257600080fd5b610ecb83610e93565b946020939093013593505050565b600060208284031215610eeb57600080fd5b6108df82610e93565b60008060408385031215610f0757600080fd5b82359150610f1760208401610e93565b90509250929050565b60008060408385031215610f3357600080fd5b50508035926020909101359150565b600080600060608486031215610f5757600080fd5b610f6084610e93565b95602085013595506040909401359392505050565b600060208284031215610f8757600080fd5b5035919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b80820180821115610c2457610c24610f8e565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361100157611001610f8e565b5060010190565b8082028115828204841417610c2457610c24610f8e565b81810381811115610c2457610c24610f8e56fea2646970667358221220f5ed46cea3cd887a4f30237e088faa93092ef91388411a47ab522d851f92391e64736f6c63430008120033",
+  "numDeployments": 2,
+  "solcInputHash": "e919c16a9159e4ea0391ec9bfba6a9c8",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"novaMailboxAddy\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"novaGasAddy\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"Handled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"captchaNeededForUser\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"arbGoerliDomainID\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"click\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"completeSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"createCookie\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddy\",\"type\":\"address\"}],\"name\":\"createHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"newHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"endSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"_destinationDomain\",\"type\":\"uint32\"},{\"internalType\":\"uint256\",\"name\":\"_gasAmount\",\"type\":\"uint256\"}],\"name\":\"getGasQuote\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"quotedPayment\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getSessionUserInterest\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"interestEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserCookieBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cookieBalance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserInterest\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"interestEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"giveUserCaptcha\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"_origin\",\"type\":\"uint32\"},{\"internalType\":\"bytes32\",\"name\":\"_sender\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"_message\",\"type\":\"bytes\"}],\"name\":\"handle\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"idToUpgrade\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cost\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookieRateBooster\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModiferBooster\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"idUserToNum\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"mostRecentUserSession\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"expiraryDate\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"sessionActive\",\"type\":\"bool\"},{\"internalType\":\"bytes32\",\"name\":\"sessionHash\",\"type\":\"bytes32\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"totalClicks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalSpent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookiePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"interestLastComputed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModifier\",\"type\":\"uint256\"}],\"internalType\":\"struct CookieClicker.cookieGame\",\"name\":\"sessionGame\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"userInterest\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"upgradeID\",\"type\":\"uint256\"}],\"name\":\"purchaseUpgrade\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"upgradeID\",\"type\":\"uint256\"}],\"name\":\"purchaseUpgradeForUser\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"response\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"simulateClick\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"clickAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"createdHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"sessionLength\",\"type\":\"uint256\"}],\"name\":\"startSession\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"proof\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"captchaContract\",\"type\":\"address\"}],\"name\":\"submitCaptcha\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"timeSpent\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userCookie\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalClicks\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalSpent\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cookiePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"interestLastComputed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"clickModifier\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"browserID\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"userAddy\",\"type\":\"address\"}],\"name\":\"verifySession\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"valid\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/CookieClicker.sol\":\"CookieClicker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":2000},\"remappings\":[]},\"sources\":{\"contracts/CookieClicker.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.18;\\n\\nimport \\\"./Interfaces/IMailbox.sol\\\";\\nimport \\\"./Interfaces/IMessageRecipient.sol\\\";\\nimport \\\"./Interfaces/IInterchainGasPaymaster.sol\\\";\\n\\n//Users can upgrade their cookie and earn more\\n//For example, a user can do a cursor upgrade and earn 0.1 cookies per second\\n//Users are given an ERC20 token called cookies(right now just points)\\ninterface ZKaptchaInterface {\\n    function verifyZkProof(bytes calldata zkProof) external view returns (bool);\\n}\\n\\ncontract CookieClicker {\\n    address immutable dev;\\n    IMailbox immutable mailBox;\\n    IInterchainGasPaymaster immutable interchainGasPaymaster;\\n    event captchaNeededForUser(address indexed user);\\n\\n    modifier sessionStarted(address user) {\\n        //The game only works if a session was started\\n        require(block.timestamp <= mostRecentUserSession[user].expiraryDate);\\n        require(mostRecentUserSession[user].sessionActive);\\n        _;\\n    }\\n    modifier onlyDev() {\\n        //The game only works if a session was started\\n        require(msg.sender == dev);\\n        _;\\n    }\\n    modifier userHasStarted(address user) {\\n        if (userCookie[user].interestLastComputed == 0) {\\n            //If user has not started, then give set them at current timestamp\\n            userCookie[user].interestLastComputed = block.timestamp;\\n        }\\n        _;\\n    }\\n    uint32 public constant arbGoerliDomainID = 421613;\\n\\n    // implement ZKaptcha anti-bot in your smart contract\\n\\n    constructor(address novaMailboxAddy, address novaGasAddy) {\\n        dev = msg.sender;\\n        idToUpgrade[1] = Upgrade(10, 1, 0);\\n        idToUpgrade[2] = Upgrade(10, 0, 1);\\n\\n        mailBox = IMailbox(novaMailboxAddy);\\n        interchainGasPaymaster = IInterchainGasPaymaster(novaGasAddy);\\n    }\\n\\n    mapping(address => cookieGame) public userCookie;\\n    mapping(address => GameSession) public mostRecentUserSession;\\n    mapping(uint256 => Upgrade) public idToUpgrade;\\n    mapping(address => mapping(uint256 => uint256)) public idUserToNum; //Tracks the number of purchases of a single upgrade\\n\\n    struct cookieGame {\\n        uint256 totalClicks;\\n        uint256 totalSpent;\\n        uint256 cookiePerSecond; //Users can earn more per second\\n        uint256 interestLastComputed;\\n        uint256 clickModifier;\\n    }\\n    struct GameSession {\\n        uint256 expiraryDate;\\n        bool sessionActive;\\n        bytes32 sessionHash;\\n        cookieGame sessionGame;\\n        uint256 userInterest;\\n    }\\n    struct Upgrade {\\n        //Turn into NFT in future\\n        uint256 cost;\\n        uint256 cookieRateBooster;\\n        uint256 clickModiferBooster;\\n    }\\n\\n    function createCookie() public userHasStarted(msg.sender) {\\n        //Make sure user does block.timestamp first\\n        userCookie[msg.sender] = cookieGame(0, 0, 0, block.timestamp, 0);\\n    }\\n\\n    function click() public userHasStarted(msg.sender) {\\n        userCookie[msg.sender].totalClicks +=\\n            1 +\\n            userCookie[msg.sender].clickModifier;\\n    }\\n\\n    function simulateClick(\\n        address user\\n    ) public view returns (uint256 clickAmount) {\\n        clickAmount +=\\n            1 +\\n            mostRecentUserSession[user].sessionGame.clickModifier;\\n    }\\n\\n    mapping(address => uint256) userCaptchaStart;\\n    uint256 public timeSpent;\\n\\n    function giveUserCaptcha(address user) public onlyDev {\\n        userCaptchaStart[user] = block.timestamp;\\n    }\\n\\n    // alignment preserving cast\\n    function addressToBytes32(address _addr) internal pure returns (bytes32) {\\n        return bytes32(uint256(uint160(_addr)));\\n    }\\n\\n    function submitCaptcha(\\n        bytes memory proof,\\n        address captchaContract\\n    ) external payable {\\n        bytes32 messageID = mailBox.dispatch(\\n            arbGoerliDomainID,\\n            addressToBytes32(captchaContract),\\n            abi.encode(\\\"Hello\\\")\\n        );\\n        _payForGas(messageID, arbGoerliDomainID, 500000);\\n    }\\n\\n    function getGasQuote(\\n        uint32 _destinationDomain,\\n        uint256 _gasAmount\\n    ) public view returns (uint256 quotedPayment) {\\n        quotedPayment = interchainGasPaymaster.quoteGasPayment(\\n            _destinationDomain,\\n            _gasAmount\\n        );\\n    }\\n\\n    function _payForGas(\\n        bytes32 _messageId,\\n        uint32 _destinationDomain,\\n        uint256 _gasAmount\\n    ) internal {\\n        interchainGasPaymaster.payForGas{value: msg.value}(\\n            _messageId,\\n            _destinationDomain,\\n            _gasAmount,\\n            msg.sender\\n        );\\n    }\\n\\n    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {\\n        return address(uint160(uint256(_buf)));\\n    }\\n\\n    function bytes32ToUint256(bytes32 _buf) internal pure returns (uint256) {\\n        return uint256(_buf);\\n    }\\n\\n    uint256 public response;\\n    event Handled();\\n\\n    function handle(\\n        uint32 _origin,\\n        bytes32 _sender,\\n        bytes calldata _message\\n    ) external {\\n        emit Handled();\\n        response = bytes32ToUint256(bytes32(_message));\\n    }\\n\\n    //Might make it so that a user has to send a transaction when they purchase an upgrade\\n    //Whenever a user purchases a cookie, the program adds up their interest\\n    function purchaseUpgrade(uint256 upgradeID) public {\\n        idUserToNum[msg.sender][upgradeID]++;\\n        uint256 cookieBalance = getUserCookieBalance(msg.sender);\\n        userCookie[msg.sender].interestLastComputed = block.timestamp;\\n        require(cookieBalance >= idToUpgrade[upgradeID].cost);\\n        userCookie[msg.sender].totalSpent +=\\n            idToUpgrade[upgradeID].cost *\\n            idUserToNum[msg.sender][upgradeID];\\n        userCookie[msg.sender].cookiePerSecond += idToUpgrade[upgradeID]\\n            .cookieRateBooster;\\n        userCookie[msg.sender].clickModifier += idToUpgrade[upgradeID]\\n            .clickModiferBooster;\\n    }\\n\\n    function purchaseUpgradeForUser(\\n        address user,\\n        uint256 upgradeID\\n    ) public onlyDev {\\n        //We are going to be applying a debt to the user\\n        idUserToNum[msg.sender][upgradeID]++;\\n        require(idToUpgrade[upgradeID].cost > 0, \\\"Not Real ID\\\");\\n        mostRecentUserSession[user].sessionGame.totalSpent +=\\n            idToUpgrade[upgradeID].cost *\\n            idUserToNum[msg.sender][upgradeID];\\n        mostRecentUserSession[user].userInterest = getSessionUserInterest(user);\\n\\n        //require(cookieBalance >= idToUpgrade[upgradeID].cost);\\n        mostRecentUserSession[user].sessionGame.cookiePerSecond += idToUpgrade[\\n            upgradeID\\n        ].cookieRateBooster;\\n        mostRecentUserSession[user].sessionGame.clickModifier += idToUpgrade[\\n            upgradeID\\n        ].clickModiferBooster;\\n        userCookie[user].interestLastComputed = block.timestamp; //Resetting interest\\n    }\\n\\n    function getSessionUserInterest(\\n        address user\\n    ) public view returns (uint256 interestEarned) {\\n        uint256 timePassed = block.timestamp -\\n            userCookie[user].interestLastComputed;\\n\\n        interestEarned =\\n            timePassed *\\n            mostRecentUserSession[user].sessionGame.cookiePerSecond;\\n    }\\n\\n    function getUserInterest(\\n        address user\\n    ) public view returns (uint256 interestEarned) {\\n        uint256 timePassed = block.timestamp -\\n            userCookie[user].interestLastComputed;\\n\\n        interestEarned = timePassed * userCookie[user].cookiePerSecond;\\n        if (mostRecentUserSession[user].sessionActive) interestEarned = 0; //If there is already a session then dont count regular interest NO DOUBLE DIPPING\\n    }\\n\\n    function getUserCookieBalance(\\n        address user\\n    ) public view returns (uint256 cookieBalance) {\\n        cookieGame memory currentGame = userCookie[user];\\n        uint256 interestEarned = getUserInterest(user);\\n        cookieBalance =\\n            currentGame.totalClicks -\\n            currentGame.totalSpent +\\n            interestEarned;\\n    }\\n\\n    function startSession(\\n        bytes32 createdHash,\\n        uint256 sessionLength\\n    ) public userHasStarted(msg.sender) {\\n        mostRecentUserSession[msg.sender].sessionHash = createdHash;\\n        mostRecentUserSession[msg.sender].expiraryDate =\\n            block.timestamp +\\n            sessionLength;\\n        //Set the session cookie rate as the users current rate\\n        mostRecentUserSession[msg.sender]\\n            .sessionGame\\n            .cookiePerSecond = userCookie[msg.sender].cookiePerSecond;\\n        //Set the session click modifier as the user's current modifier\\n        mostRecentUserSession[msg.sender]\\n            .sessionGame\\n            .clickModifier = userCookie[msg.sender].clickModifier;\\n\\n        mostRecentUserSession[msg.sender].sessionActive = true;\\n    }\\n\\n    function createHash(\\n        uint256 browserID,\\n        address userAddy\\n    ) public pure returns (bytes32 newHash) {\\n        newHash = keccak256(abi.encodePacked(browserID, userAddy));\\n    }\\n\\n    function verifySession(\\n        uint256 browserID, //We can make this bytes\\n        address userAddy\\n    ) public view returns (bool valid) {\\n        valid = mostRecentUserSession[userAddy].sessionHash ==\\n            keccak256(abi.encodePacked(browserID, userAddy))\\n            ? true\\n            : false;\\n    }\\n\\n    function endSession() public {\\n        //Allows a user to end a session and prevent it from happening\\n        mostRecentUserSession[msg.sender].sessionActive = false;\\n        //We could have an event fire off or something\\n    }\\n\\n    function completeSession(\\n        uint256 browserID,\\n        address userAddress\\n    ) public onlyDev sessionStarted(userAddress) {\\n        require(verifySession(browserID, userAddress));\\n        userCookie[userAddress].totalClicks += mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.totalClicks;\\n        uint256 userDebt = mostRecentUserSession[userAddress]\\n            .sessionGame\\n            .totalSpent;\\n        uint256 userInterest = mostRecentUserSession[userAddress].userInterest;\\n\\n        require(getUserCookieBalance(userAddress) + userInterest >= userDebt);\\n        userCookie[userAddress].totalSpent += userDebt;\\n        userCookie[userAddress].clickModifier = mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.clickModifier;\\n        userCookie[userAddress].cookiePerSecond = mostRecentUserSession[\\n            userAddress\\n        ].sessionGame.cookiePerSecond;\\n        mostRecentUserSession[userAddress].sessionActive = false;\\n        userCookie[userAddress].interestLastComputed = block.timestamp; //Resetting interest\\n\\n        delete mostRecentUserSession[userAddress];\\n    }\\n}\\n\",\"keccak256\":\"0xf51275bc43ba37a3be9396eda5d15d2aeb8ef142db3dfd7c8dfe1bd6d5a50beb\",\"license\":\"MIT\"},\"contracts/Interfaces/IInterchainGasPaymaster.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.6.11;\\n\\n/**\\n * @title IInterchainGasPaymaster\\n * @notice Manages payments on a source chain to cover gas costs of relaying\\n * messages to destination chains.\\n */\\ninterface IInterchainGasPaymaster {\\n    /**\\n     * @notice Emitted when a payment is made for a message's gas costs.\\n     * @param messageId The ID of the message to pay for.\\n     * @param gasAmount The amount of destination gas paid for.\\n     * @param payment The amount of native tokens paid.\\n     */\\n    event GasPayment(\\n        bytes32 indexed messageId,\\n        uint256 gasAmount,\\n        uint256 payment\\n    );\\n\\n    function payForGas(\\n        bytes32 _messageId,\\n        uint32 _destinationDomain,\\n        uint256 _gasAmount,\\n        address _refundAddress\\n    ) external payable;\\n\\n    function quoteGasPayment(\\n        uint32 _destinationDomain,\\n        uint256 _gasAmount\\n    ) external view returns (uint256);\\n}\\n\",\"keccak256\":\"0xea5705377bcae5ff9dee6599d66f88c7e76a61169c2046a5efedcf4034354045\",\"license\":\"MIT OR Apache-2.0\"},\"contracts/Interfaces/IInterchainSecurityModule.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.6.11;\\n\\ninterface IInterchainSecurityModule {\\n    enum Types {\\n        UNUSED,\\n        ROUTING,\\n        AGGREGATION,\\n        LEGACY_MULTISIG,\\n        MULTISIG\\n    }\\n\\n    /**\\n     * @notice Returns an enum that represents the type of security model\\n     * encoded by this ISM.\\n     * @dev Relayers infer how to fetch and format metadata.\\n     */\\n    function moduleType() external view returns (uint8);\\n\\n    /**\\n     * @notice Defines a security model responsible for verifying interchain\\n     * messages based on the provided metadata.\\n     * @param _metadata Off-chain metadata provided by a relayer, specific to\\n     * the security model encoded by the module (e.g. validator signatures)\\n     * @param _message Hyperlane encoded interchain message\\n     * @return True if the message was verified\\n     */\\n    function verify(\\n        bytes calldata _metadata,\\n        bytes calldata _message\\n    ) external returns (bool);\\n}\\n\\ninterface ISpecifiesInterchainSecurityModule {\\n    function interchainSecurityModule()\\n        external\\n        view\\n        returns (IInterchainSecurityModule);\\n}\\n\",\"keccak256\":\"0xec1eddad4089332bc7f3ee8a5d0d77913e44e5549a49b2111aacf440e1ec4345\",\"license\":\"MIT OR Apache-2.0\"},\"contracts/Interfaces/IMailbox.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.8.0;\\n\\nimport {IInterchainSecurityModule} from \\\"./IInterchainSecurityModule.sol\\\";\\n\\ninterface IMailbox {\\n    // ============ Events ============\\n    /**\\n     * @notice Emitted when a new message is dispatched via Hyperlane\\n     * @param sender The address that dispatched the message\\n     * @param destination The destination domain of the message\\n     * @param recipient The message recipient address on `destination`\\n     * @param message Raw bytes of message\\n     */\\n    event Dispatch(\\n        address indexed sender,\\n        uint32 indexed destination,\\n        bytes32 indexed recipient,\\n        bytes message\\n    );\\n\\n    /**\\n     * @notice Emitted when a new message is dispatched via Hyperlane\\n     * @param messageId The unique message identifier\\n     */\\n    event DispatchId(bytes32 indexed messageId);\\n\\n    /**\\n     * @notice Emitted when a Hyperlane message is processed\\n     * @param messageId The unique message identifier\\n     */\\n    event ProcessId(bytes32 indexed messageId);\\n\\n    /**\\n     * @notice Emitted when a Hyperlane message is delivered\\n     * @param origin The origin domain of the message\\n     * @param sender The message sender address on `origin`\\n     * @param recipient The address that handled the message\\n     */\\n    event Process(\\n        uint32 indexed origin,\\n        bytes32 indexed sender,\\n        address indexed recipient\\n    );\\n\\n    function localDomain() external view returns (uint32);\\n\\n    function delivered(bytes32 messageId) external view returns (bool);\\n\\n    function defaultIsm() external view returns (IInterchainSecurityModule);\\n\\n    function dispatch(\\n        uint32 _destinationDomain,\\n        bytes32 _recipientAddress,\\n        bytes calldata _messageBody\\n    ) external returns (bytes32);\\n\\n    function process(\\n        bytes calldata _metadata,\\n        bytes calldata _message\\n    ) external;\\n\\n    function count() external view returns (uint32);\\n\\n    function root() external view returns (bytes32);\\n\\n    function latestCheckpoint() external view returns (bytes32, uint32);\\n\\n    function recipientIsm(\\n        address _recipient\\n    ) external view returns (IInterchainSecurityModule);\\n}\\n\",\"keccak256\":\"0x2b74aa2bc94ce4224e8841fdf48ab0b4e61dbbf0f4aea0fb5049e11bcdb6f1c5\",\"license\":\"MIT OR Apache-2.0\"},\"contracts/Interfaces/IMessageRecipient.sol\":{\"content\":\"// SPDX-License-Identifier: MIT OR Apache-2.0\\npragma solidity >=0.6.11;\\n\\ninterface IMessageRecipient {\\n    function handle(\\n        uint32 _origin,\\n        bytes32 _sender,\\n        bytes calldata _message\\n    ) external;\\n}\\n\",\"keccak256\":\"0x250fabee11ab22fc3cb14ba0ff86410f681e621c43590c24ecbcf48fea8c7e70\",\"license\":\"MIT OR Apache-2.0\"}},\"version\":1}",
+  "bytecode": "0x60e060405234801561001057600080fd5b50604051620017bb380380620017bb83398101604081905261003191610185565b336080526040805160608082018352600a808352600160208085018281526000868801818152848252600280855297517fe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e05591517fe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e15590517fe90b7bceb6e7df5418fb78d8ee546e97c83a08bbccc01a0644d599ccd2a7c2e2558651948501875292845283810183815295840191825291849052929052517f679795a0195a1b76cdebb7c51d74e058aee92919b8c3389af86ef24535e8a28c5590517f679795a0195a1b76cdebb7c51d74e058aee92919b8c3389af86ef24535e8a28d55517f679795a0195a1b76cdebb7c51d74e058aee92919b8c3389af86ef24535e8a28e556001600160a01b0391821660a0521660c0526101b8565b80516001600160a01b038116811461018057600080fd5b919050565b6000806040838503121561019857600080fd5b6101a183610169565b91506101af60208401610169565b90509250929050565b60805160a05160c0516115be620001fd600039600081816106390152611196015260006106b70152600081816108da015281816109cb0152610f0e01526115be6000f3fe60806040526004361061018b5760003560e01c806394d1441c116100d6578063e237a3fc1161007f578063e8a8e23111610059578063e8a8e2311461058b578063e927740b146105ab578063e97ff4e0146105cb57600080fd5b8063e237a3fc146104e8578063e36840dd14610515578063e55a9ddf1461053557600080fd5b8063d1159051116100b0578063d115905114610441578063e0fc5870146104b3578063e1b1a214146104d357600080fd5b806394d1441c146103e1578063ad81507814610401578063bf8853c61461042157600080fd5b80636e611400116101385780637d55923d116101125780637d55923d1461038c5780637d9b92de146103a15780638fa5cbc3146103c157600080fd5b80636e61140014610272578063769edf6a146103565780637a7f01a71461037657600080fd5b80633fed0a65116101695780633fed0a651461021057806356d5d4751461023c5780635fdba8391461025c57600080fd5b806312a049661461019057806315381ed8146101db5780632d599670146101fb575b600080fd5b34801561019c57600080fd5b506101c86101ab36600461121d565b600360209081526000928352604080842090915290825290205481565b6040519081526020015b60405180910390f35b3480156101e757600080fd5b506101c86101f636600461125b565b6105fb565b61020e6102093660046112a6565b6106b3565b005b34801561021c57600080fd5b5061022762066eed81565b60405163ffffffff90911681526020016101d2565b34801561024857600080fd5b5061020e610257366004611368565b6107c1565b34801561026857600080fd5b506101c860055481565b34801561027e57600080fd5b506102f961028d3660046113ef565b6001602081815260009283526040928390208054928101546002820154855160a081018752600384015481526004840154948101949094526005830154958401959095526006820154606084015260078201546080840152600890910154929360ff9091169290919085565b60408051958652931515602080870191909152858501939093528151606080870191909152928201516080808701919091529382015160a08601529181015160c0850152919091015160e0830152610100820152610120016101d2565b34801561036257600080fd5b506101c861037136600461140a565b610803565b34801561038257600080fd5b506101c860065481565b34801561039857600080fd5b5061020e610851565b3480156103ad57600080fd5b5061020e6103bc3660046113ef565b6108cf565b3480156103cd57600080fd5b5061020e6103dc36600461142d565b610920565b3480156103ed57600080fd5b5061020e6103fc36600461121d565b6109c0565b34801561040d57600080fd5b506101c861041c3660046113ef565b610bb2565b34801561042d57600080fd5b506101c861043c3660046113ef565b610c03565b34801561044d57600080fd5b5061048b61045c3660046113ef565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a0016101d2565b3480156104bf57600080fd5b5061020e6104ce36600461144f565b610c87565b3480156104df57600080fd5b5061020e610db6565b3480156104f457600080fd5b5061020e33600090815260016020819052604090912001805460ff19169055565b34801561052157600080fd5b506101c86105303660046113ef565b610e49565b34801561054157600080fd5b5061057061055036600461144f565b600260208190526000918252604090912080546001820154919092015483565b604080519384526020840192909252908201526060016101d2565b34801561059757600080fd5b506101c86105a63660046113ef565b610ecc565b3480156105b757600080fd5b5061020e6105c636600461140a565b610f03565b3480156105d757600080fd5b506105eb6105e636600461140a565b6110d7565b60405190151581526020016101d2565b6040517fa692979300000000000000000000000000000000000000000000000000000000815263ffffffff83166004820152602481018290526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a692979390604401602060405180830381865afa158015610688573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906106ac9190611468565b9392505050565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663fa31de0162066eed6106f8856001600160a01b031690565b6040516020016107399060208082526005908201527f48656c6c6f000000000000000000000000000000000000000000000000000000604082015260600190565b6040516020818303038152906040526040518463ffffffff1660e01b815260040161076693929190611481565b6020604051808303816000875af1158015610785573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107a99190611468565b90506107bc8162066eed6207a12061114e565b505050565b6040517f4cc4a1630487b2fe690830097547fdad4ac73ff86d3655671911224fd0a7ccc590600090a16107fa6107f782846114e4565b90565b60065550505050565b6000828260405160200161083392919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60405160208183030381529060405280519060200120905092915050565b33600081815260208190526040812060030154900361088a576001600160a01b0381166000908152602081905260409020426003909101555b336000908152602081905260409020600401546108a8906001611531565b33600090815260208190526040812080549091906108c7908490611531565b909155505050565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461090457600080fd5b6001600160a01b03166000908152600460205260409020429055565b336000818152602081905260408120600301549003610959576001600160a01b0381166000908152602081905260409020426003909101555b3360009081526001602052604090206002018390556109788242611531565b3360009081526001602081815260408084209485558382529092206002810154600585015560040154918190526007830191909155908101805460ff19169091179055505050565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146109f557600080fd5b3360009081526003602090815260408083208484529091528120805491610a1b83611544565b9091555050600081815260026020526040902054610a99576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600b60248201527f4e6f74205265616c204944000000000000000000000000000000000000000000604482015260640160405180910390fd5b336000908152600360209081526040808320848452825280832054600290925290912054610ac7919061155e565b6001600160a01b03831660009081526001602052604081206004018054909190610af2908490611531565b90915550610b01905082610bb2565b6001600160a01b03831660008181526001602081815260408084206008810196909655868452600282528320820154938352526005909201805491929091610b4a908490611531565b90915550506000818152600260208181526040808420909201546001600160a01b03861684526001909152908220600701805491929091610b8c908490611531565b9091555050506001600160a01b0316600090815260208190526040902042600390910155565b6001600160a01b0381166000908152602081905260408120600301548190610bda9042611575565b6001600160a01b0384166000908152600160205260409020600501549091506106ac908261155e565b6001600160a01b0381166000908152602081905260408120600301548190610c2b9042611575565b6001600160a01b038416600090815260208190526040902060020154909150610c54908261155e565b6001600160a01b0384166000908152600160208190526040909120015490925060ff1615610c8157600091505b50919050565b3360009081526003602090815260408083208484529091528120805491610cad83611544565b91905055506000610cbd33610e49565b33600090815260208181526040808320426003909101558583526002909152902054909150811015610cee57600080fd5b336000908152600360209081526040808320858452825280832054600290925290912054610d1c919061155e565b3360009081526020819052604081206001018054909190610d3e908490611531565b9091555050600082815260026020818152604080842060010154338552918490528320909101805491929091610d75908490611531565b909155505060008281526002602081815260408084209092015433845290839052908220600401805491929091610dad908490611531565b90915550505050565b336000818152602081905260408120600301549003610def576001600160a01b0381166000908152602081905260409020426003909101555b506040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b6001600160a01b038116600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083015260040154608082015281610ea384610c03565b90508082602001518360000151610eba9190611575565b610ec49190611531565b949350505050565b6001600160a01b0381166000908152600160208190526040822060070154610ef391611531565b610efd9082611531565b92915050565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610f3857600080fd5b6001600160a01b0381166000908152600160205260409020548190421115610f5f57600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff16610f8857600080fd5b610f9283836110d7565b610f9b57600080fd5b6001600160a01b038216600090815260016020908152604080832060030154918390528220805491929091610fd1908490611531565b90915550506001600160a01b03821660009081526001602052604090206004810154600890910154818161100486610e49565b61100e9190611531565b101561101957600080fd5b6001600160a01b03841660009081526020819052604081206001018054849290611044908490611531565b9091555050506001600160a01b039092166000908152600160208181526040808420600781018054868552928620600481810194909455600583018054600280840191909155848801805460ff1990811682554260039586015598909752888555865490971690955594820186905593810185905590810184905590839055600681018390559082905560080155505050565b6000828260405160200161110792919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60408051601f1981840301815291815281516020928301206001600160a01b03851660009081526001909352912060020154146111455760006106ac565b60019392505050565b6040517f11bf2c180000000000000000000000000000000000000000000000000000000081526004810184905263ffffffff83166024820152604481018290523360648201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906311bf2c189034906084016000604051808303818588803b1580156111e357600080fd5b505af11580156111f7573d6000803e3d6000fd5b5050505050505050565b80356001600160a01b038116811461121857600080fd5b919050565b6000806040838503121561123057600080fd5b61123983611201565b946020939093013593505050565b803563ffffffff8116811461121857600080fd5b6000806040838503121561126e57600080fd5b61123983611247565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b600080604083850312156112b957600080fd5b823567ffffffffffffffff808211156112d157600080fd5b818501915085601f8301126112e557600080fd5b8135818111156112f7576112f7611277565b604051601f8201601f19908116603f0116810190838211818310171561131f5761131f611277565b8160405282815288602084870101111561133857600080fd5b82602086016020830137600060208483010152809650505050505061135f60208401611201565b90509250929050565b6000806000806060858703121561137e57600080fd5b61138785611247565b935060208501359250604085013567ffffffffffffffff808211156113ab57600080fd5b818701915087601f8301126113bf57600080fd5b8135818111156113ce57600080fd5b8860208285010111156113e057600080fd5b95989497505060200194505050565b60006020828403121561140157600080fd5b6106ac82611201565b6000806040838503121561141d57600080fd5b8235915061135f60208401611201565b6000806040838503121561144057600080fd5b50508035926020909101359150565b60006020828403121561146157600080fd5b5035919050565b60006020828403121561147a57600080fd5b5051919050565b63ffffffff8416815260006020848184015260606040840152835180606085015260005b818110156114c1578581018301518582016080015282016114a5565b506000608082860101526080601f19601f83011685010192505050949350505050565b80356020831015610efd57600019602084900360031b1b1692915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b80820180821115610efd57610efd611502565b6000600019820361155757611557611502565b5060010190565b8082028115828204841417610efd57610efd611502565b81810381811115610efd57610efd61150256fea2646970667358221220662eee56564cd1e19441e4eea7257b6fcaf1172bcb00ba146ccfbd9e3717bc0764736f6c63430008120033",
+  "deployedBytecode": "0x60806040526004361061018b5760003560e01c806394d1441c116100d6578063e237a3fc1161007f578063e8a8e23111610059578063e8a8e2311461058b578063e927740b146105ab578063e97ff4e0146105cb57600080fd5b8063e237a3fc146104e8578063e36840dd14610515578063e55a9ddf1461053557600080fd5b8063d1159051116100b0578063d115905114610441578063e0fc5870146104b3578063e1b1a214146104d357600080fd5b806394d1441c146103e1578063ad81507814610401578063bf8853c61461042157600080fd5b80636e611400116101385780637d55923d116101125780637d55923d1461038c5780637d9b92de146103a15780638fa5cbc3146103c157600080fd5b80636e61140014610272578063769edf6a146103565780637a7f01a71461037657600080fd5b80633fed0a65116101695780633fed0a651461021057806356d5d4751461023c5780635fdba8391461025c57600080fd5b806312a049661461019057806315381ed8146101db5780632d599670146101fb575b600080fd5b34801561019c57600080fd5b506101c86101ab36600461121d565b600360209081526000928352604080842090915290825290205481565b6040519081526020015b60405180910390f35b3480156101e757600080fd5b506101c86101f636600461125b565b6105fb565b61020e6102093660046112a6565b6106b3565b005b34801561021c57600080fd5b5061022762066eed81565b60405163ffffffff90911681526020016101d2565b34801561024857600080fd5b5061020e610257366004611368565b6107c1565b34801561026857600080fd5b506101c860055481565b34801561027e57600080fd5b506102f961028d3660046113ef565b6001602081815260009283526040928390208054928101546002820154855160a081018752600384015481526004840154948101949094526005830154958401959095526006820154606084015260078201546080840152600890910154929360ff9091169290919085565b60408051958652931515602080870191909152858501939093528151606080870191909152928201516080808701919091529382015160a08601529181015160c0850152919091015160e0830152610100820152610120016101d2565b34801561036257600080fd5b506101c861037136600461140a565b610803565b34801561038257600080fd5b506101c860065481565b34801561039857600080fd5b5061020e610851565b3480156103ad57600080fd5b5061020e6103bc3660046113ef565b6108cf565b3480156103cd57600080fd5b5061020e6103dc36600461142d565b610920565b3480156103ed57600080fd5b5061020e6103fc36600461121d565b6109c0565b34801561040d57600080fd5b506101c861041c3660046113ef565b610bb2565b34801561042d57600080fd5b506101c861043c3660046113ef565b610c03565b34801561044d57600080fd5b5061048b61045c3660046113ef565b600060208190529081526040902080546001820154600283015460038401546004909401549293919290919085565b604080519586526020860194909452928401919091526060830152608082015260a0016101d2565b3480156104bf57600080fd5b5061020e6104ce36600461144f565b610c87565b3480156104df57600080fd5b5061020e610db6565b3480156104f457600080fd5b5061020e33600090815260016020819052604090912001805460ff19169055565b34801561052157600080fd5b506101c86105303660046113ef565b610e49565b34801561054157600080fd5b5061057061055036600461144f565b600260208190526000918252604090912080546001820154919092015483565b604080519384526020840192909252908201526060016101d2565b34801561059757600080fd5b506101c86105a63660046113ef565b610ecc565b3480156105b757600080fd5b5061020e6105c636600461140a565b610f03565b3480156105d757600080fd5b506105eb6105e636600461140a565b6110d7565b60405190151581526020016101d2565b6040517fa692979300000000000000000000000000000000000000000000000000000000815263ffffffff83166004820152602481018290526000907f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03169063a692979390604401602060405180830381865afa158015610688573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906106ac9190611468565b9392505050565b60007f00000000000000000000000000000000000000000000000000000000000000006001600160a01b031663fa31de0162066eed6106f8856001600160a01b031690565b6040516020016107399060208082526005908201527f48656c6c6f000000000000000000000000000000000000000000000000000000604082015260600190565b6040516020818303038152906040526040518463ffffffff1660e01b815260040161076693929190611481565b6020604051808303816000875af1158015610785573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906107a99190611468565b90506107bc8162066eed6207a12061114e565b505050565b6040517f4cc4a1630487b2fe690830097547fdad4ac73ff86d3655671911224fd0a7ccc590600090a16107fa6107f782846114e4565b90565b60065550505050565b6000828260405160200161083392919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60405160208183030381529060405280519060200120905092915050565b33600081815260208190526040812060030154900361088a576001600160a01b0381166000908152602081905260409020426003909101555b336000908152602081905260409020600401546108a8906001611531565b33600090815260208190526040812080549091906108c7908490611531565b909155505050565b336001600160a01b037f0000000000000000000000000000000000000000000000000000000000000000161461090457600080fd5b6001600160a01b03166000908152600460205260409020429055565b336000818152602081905260408120600301549003610959576001600160a01b0381166000908152602081905260409020426003909101555b3360009081526001602052604090206002018390556109788242611531565b3360009081526001602081815260408084209485558382529092206002810154600585015560040154918190526007830191909155908101805460ff19169091179055505050565b336001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016146109f557600080fd5b3360009081526003602090815260408083208484529091528120805491610a1b83611544565b9091555050600081815260026020526040902054610a99576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152600b60248201527f4e6f74205265616c204944000000000000000000000000000000000000000000604482015260640160405180910390fd5b336000908152600360209081526040808320848452825280832054600290925290912054610ac7919061155e565b6001600160a01b03831660009081526001602052604081206004018054909190610af2908490611531565b90915550610b01905082610bb2565b6001600160a01b03831660008181526001602081815260408084206008810196909655868452600282528320820154938352526005909201805491929091610b4a908490611531565b90915550506000818152600260208181526040808420909201546001600160a01b03861684526001909152908220600701805491929091610b8c908490611531565b9091555050506001600160a01b0316600090815260208190526040902042600390910155565b6001600160a01b0381166000908152602081905260408120600301548190610bda9042611575565b6001600160a01b0384166000908152600160205260409020600501549091506106ac908261155e565b6001600160a01b0381166000908152602081905260408120600301548190610c2b9042611575565b6001600160a01b038416600090815260208190526040902060020154909150610c54908261155e565b6001600160a01b0384166000908152600160208190526040909120015490925060ff1615610c8157600091505b50919050565b3360009081526003602090815260408083208484529091528120805491610cad83611544565b91905055506000610cbd33610e49565b33600090815260208181526040808320426003909101558583526002909152902054909150811015610cee57600080fd5b336000908152600360209081526040808320858452825280832054600290925290912054610d1c919061155e565b3360009081526020819052604081206001018054909190610d3e908490611531565b9091555050600082815260026020818152604080842060010154338552918490528320909101805491929091610d75908490611531565b909155505060008281526002602081815260408084209092015433845290839052908220600401805491929091610dad908490611531565b90915550505050565b336000818152602081905260408120600301549003610def576001600160a01b0381166000908152602081905260409020426003909101555b506040805160a0810182526000808252602080830182815283850183815242606086019081526080860185815233865293859052959093209351845551600184015590516002830155915160038201559051600490910155565b6001600160a01b038116600090815260208181526040808320815160a081018352815481526001820154938101939093526002810154918301919091526003810154606083015260040154608082015281610ea384610c03565b90508082602001518360000151610eba9190611575565b610ec49190611531565b949350505050565b6001600160a01b0381166000908152600160208190526040822060070154610ef391611531565b610efd9082611531565b92915050565b336001600160a01b037f00000000000000000000000000000000000000000000000000000000000000001614610f3857600080fd5b6001600160a01b0381166000908152600160205260409020548190421115610f5f57600080fd5b6001600160a01b0381166000908152600160208190526040909120015460ff16610f8857600080fd5b610f9283836110d7565b610f9b57600080fd5b6001600160a01b038216600090815260016020908152604080832060030154918390528220805491929091610fd1908490611531565b90915550506001600160a01b03821660009081526001602052604090206004810154600890910154818161100486610e49565b61100e9190611531565b101561101957600080fd5b6001600160a01b03841660009081526020819052604081206001018054849290611044908490611531565b9091555050506001600160a01b039092166000908152600160208181526040808420600781018054868552928620600481810194909455600583018054600280840191909155848801805460ff1990811682554260039586015598909752888555865490971690955594820186905593810185905590810184905590839055600681018390559082905560080155505050565b6000828260405160200161110792919091825260601b6bffffffffffffffffffffffff1916602082015260340190565b60408051601f1981840301815291815281516020928301206001600160a01b03851660009081526001909352912060020154146111455760006106ac565b60019392505050565b6040517f11bf2c180000000000000000000000000000000000000000000000000000000081526004810184905263ffffffff83166024820152604481018290523360648201527f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316906311bf2c189034906084016000604051808303818588803b1580156111e357600080fd5b505af11580156111f7573d6000803e3d6000fd5b5050505050505050565b80356001600160a01b038116811461121857600080fd5b919050565b6000806040838503121561123057600080fd5b61123983611201565b946020939093013593505050565b803563ffffffff8116811461121857600080fd5b6000806040838503121561126e57600080fd5b61123983611247565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b600080604083850312156112b957600080fd5b823567ffffffffffffffff808211156112d157600080fd5b818501915085601f8301126112e557600080fd5b8135818111156112f7576112f7611277565b604051601f8201601f19908116603f0116810190838211818310171561131f5761131f611277565b8160405282815288602084870101111561133857600080fd5b82602086016020830137600060208483010152809650505050505061135f60208401611201565b90509250929050565b6000806000806060858703121561137e57600080fd5b61138785611247565b935060208501359250604085013567ffffffffffffffff808211156113ab57600080fd5b818701915087601f8301126113bf57600080fd5b8135818111156113ce57600080fd5b8860208285010111156113e057600080fd5b95989497505060200194505050565b60006020828403121561140157600080fd5b6106ac82611201565b6000806040838503121561141d57600080fd5b8235915061135f60208401611201565b6000806040838503121561144057600080fd5b50508035926020909101359150565b60006020828403121561146157600080fd5b5035919050565b60006020828403121561147a57600080fd5b5051919050565b63ffffffff8416815260006020848184015260606040840152835180606085015260005b818110156114c1578581018301518582016080015282016114a5565b506000608082860101526080601f19601f83011685010192505050949350505050565b80356020831015610efd57600019602084900360031b1b1692915050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b80820180821115610efd57610efd611502565b6000600019820361155757611557611502565b5060010190565b8082028115828204841417610efd57610efd611502565b81810381811115610efd57610efd61150256fea2646970667358221220662eee56564cd1e19441e4eea7257b6fcaf1172bcb00ba146ccfbd9e3717bc0764736f6c63430008120033",
   "devdoc": {
     "kind": "dev",
     "methods": {},
@@ -513,52 +562,60 @@
   "storageLayout": {
     "storage": [
       {
-        "astId": 100,
+        "astId": 133,
         "contract": "contracts/CookieClicker.sol:CookieClicker",
         "label": "userCookie",
         "offset": 0,
         "slot": "0",
-        "type": "t_mapping(t_address,t_struct(cookieGame)129_storage)"
+        "type": "t_mapping(t_address,t_struct(cookieGame)160_storage)"
       },
       {
-        "astId": 105,
+        "astId": 138,
         "contract": "contracts/CookieClicker.sol:CookieClicker",
         "label": "mostRecentUserSession",
         "offset": 0,
         "slot": "1",
-        "type": "t_mapping(t_address,t_struct(GameSession)141_storage)"
+        "type": "t_mapping(t_address,t_struct(GameSession)172_storage)"
       },
       {
-        "astId": 107,
-        "contract": "contracts/CookieClicker.sol:CookieClicker",
-        "label": "d",
-        "offset": 0,
-        "slot": "2",
-        "type": "t_uint256"
-      },
-      {
-        "astId": 112,
+        "astId": 143,
         "contract": "contracts/CookieClicker.sol:CookieClicker",
         "label": "idToUpgrade",
         "offset": 0,
-        "slot": "3",
-        "type": "t_mapping(t_uint256,t_struct(Upgrade)148_storage)"
+        "slot": "2",
+        "type": "t_mapping(t_uint256,t_struct(Upgrade)179_storage)"
       },
       {
-        "astId": 118,
+        "astId": 149,
         "contract": "contracts/CookieClicker.sol:CookieClicker",
         "label": "idUserToNum",
         "offset": 0,
-        "slot": "4",
+        "slot": "3",
         "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))"
       },
       {
-        "astId": 206,
+        "astId": 245,
         "contract": "contracts/CookieClicker.sol:CookieClicker",
         "label": "userCaptchaStart",
         "offset": 0,
-        "slot": "5",
+        "slot": "4",
         "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 247,
+        "contract": "contracts/CookieClicker.sol:CookieClicker",
+        "label": "timeSpent",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 384,
+        "contract": "contracts/CookieClicker.sol:CookieClicker",
+        "label": "response",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_uint256"
       }
     ],
     "types": {
@@ -584,19 +641,19 @@
         "numberOfBytes": "32",
         "value": "t_mapping(t_uint256,t_uint256)"
       },
-      "t_mapping(t_address,t_struct(GameSession)141_storage)": {
+      "t_mapping(t_address,t_struct(GameSession)172_storage)": {
         "encoding": "mapping",
         "key": "t_address",
         "label": "mapping(address => struct CookieClicker.GameSession)",
         "numberOfBytes": "32",
-        "value": "t_struct(GameSession)141_storage"
+        "value": "t_struct(GameSession)172_storage"
       },
-      "t_mapping(t_address,t_struct(cookieGame)129_storage)": {
+      "t_mapping(t_address,t_struct(cookieGame)160_storage)": {
         "encoding": "mapping",
         "key": "t_address",
         "label": "mapping(address => struct CookieClicker.cookieGame)",
         "numberOfBytes": "32",
-        "value": "t_struct(cookieGame)129_storage"
+        "value": "t_struct(cookieGame)160_storage"
       },
       "t_mapping(t_address,t_uint256)": {
         "encoding": "mapping",
@@ -605,12 +662,12 @@
         "numberOfBytes": "32",
         "value": "t_uint256"
       },
-      "t_mapping(t_uint256,t_struct(Upgrade)148_storage)": {
+      "t_mapping(t_uint256,t_struct(Upgrade)179_storage)": {
         "encoding": "mapping",
         "key": "t_uint256",
         "label": "mapping(uint256 => struct CookieClicker.Upgrade)",
         "numberOfBytes": "32",
-        "value": "t_struct(Upgrade)148_storage"
+        "value": "t_struct(Upgrade)179_storage"
       },
       "t_mapping(t_uint256,t_uint256)": {
         "encoding": "mapping",
@@ -619,12 +676,12 @@
         "numberOfBytes": "32",
         "value": "t_uint256"
       },
-      "t_struct(GameSession)141_storage": {
+      "t_struct(GameSession)172_storage": {
         "encoding": "inplace",
         "label": "struct CookieClicker.GameSession",
         "members": [
           {
-            "astId": 131,
+            "astId": 162,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "expiraryDate",
             "offset": 0,
@@ -632,7 +689,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 133,
+            "astId": 164,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "sessionActive",
             "offset": 0,
@@ -640,7 +697,7 @@
             "type": "t_bool"
           },
           {
-            "astId": 135,
+            "astId": 166,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "sessionHash",
             "offset": 0,
@@ -648,15 +705,15 @@
             "type": "t_bytes32"
           },
           {
-            "astId": 138,
+            "astId": 169,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "sessionGame",
             "offset": 0,
             "slot": "3",
-            "type": "t_struct(cookieGame)129_storage"
+            "type": "t_struct(cookieGame)160_storage"
           },
           {
-            "astId": 140,
+            "astId": 171,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "userInterest",
             "offset": 0,
@@ -666,12 +723,12 @@
         ],
         "numberOfBytes": "288"
       },
-      "t_struct(Upgrade)148_storage": {
+      "t_struct(Upgrade)179_storage": {
         "encoding": "inplace",
         "label": "struct CookieClicker.Upgrade",
         "members": [
           {
-            "astId": 143,
+            "astId": 174,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "cost",
             "offset": 0,
@@ -679,7 +736,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 145,
+            "astId": 176,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "cookieRateBooster",
             "offset": 0,
@@ -687,7 +744,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 147,
+            "astId": 178,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "clickModiferBooster",
             "offset": 0,
@@ -697,12 +754,12 @@
         ],
         "numberOfBytes": "96"
       },
-      "t_struct(cookieGame)129_storage": {
+      "t_struct(cookieGame)160_storage": {
         "encoding": "inplace",
         "label": "struct CookieClicker.cookieGame",
         "members": [
           {
-            "astId": 120,
+            "astId": 151,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "totalClicks",
             "offset": 0,
@@ -710,7 +767,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 122,
+            "astId": 153,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "totalSpent",
             "offset": 0,
@@ -718,7 +775,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 124,
+            "astId": 155,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "cookiePerSecond",
             "offset": 0,
@@ -726,7 +783,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 126,
+            "astId": 157,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "interestLastComputed",
             "offset": 0,
@@ -734,7 +791,7 @@
             "type": "t_uint256"
           },
           {
-            "astId": 128,
+            "astId": 159,
             "contract": "contracts/CookieClicker.sol:CookieClicker",
             "label": "clickModifier",
             "offset": 0,

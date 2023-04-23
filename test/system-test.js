@@ -151,12 +151,26 @@ describe("Cookie Clicker ", function () {
 
         const ans = await askQuestion("What is it saying: ");
         console.log(ans);
-        const proof = await getProof(deployer.address, ans);
-        await cookieClicker.submitCaptcha(proof);
-        console.log((await cookieClicker.timeSpent()).toString());
-        // rough sketch of sending args to the prover
+        const proof = await getProof(
+          "0xC34Ecf40fa8Bf08C763E0CeAb618f77301F8578b",
+          ans
+        );
+        const destinationID = 421613;
+        const amount = await cookieClicker.getGasQuote(destinationID, 100000);
+        console.log(amount.toString());
+        await cookieClicker.submitCaptcha(
+          destinationID,
+          "0xC34Ecf40fa8Bf08C763E0CeAb618f77301F8578b",
+          0,
+          proof,
+          { value: "0" }
+        );
+
+        //rough sketch of sending args to the prover
       });
-      it("user can mint a bond", async () => {});
+      it("user can mint a bond 24", async () => {
+        console.log((await cookieClicker.localDomain()).toString());
+      });
     });
   });
   async function clickThisMany(num) {

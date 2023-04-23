@@ -1,30 +1,30 @@
 Arguments: 
-  /home/gnome/.nvm/versions/node/v16.14.2/bin/node /home/gnome/.node/corepack/yarn/1.22.15/bin/yarn.js add openzeppelin/openzeppelin-contracts-upgradeable/
+  /home/gnome2/.nvm/versions/node/v18.12.1/bin/node /home/gnome2/.cache/node/corepack/yarn/1.22.19/bin/yarn.js add hyperlane-xyz/hyperlane-monorepo/solidity
 
 PATH: 
-  /home/gnome/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/bin/remote-cli:/home/gnome/.cargo/bin:/home/gnome/.nvm/versions/node/v16.14.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files/Oculus/Support/oculus-runtime:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/Intel/WiFi/bin/:/mnt/c/Program Files/Common Files/Intel/WirelessCommon/:/mnt/c/Program Files/Microsoft SQL Server/130/Tools/Binn/:/mnt/c/Program Files (x86)/Common Files/Acronis/VirtualFile/:/mnt/c/Program Files (x86)/Common Files/Acronis/VirtualFile64/:/mnt/c/Program Files (x86)/Common Files/Acronis/FileProtector/:/mnt/c/Program Files (x86)/Common Files/Acronis/FileProtector64/:/mnt/c/Program Files (x86)/Common Files/Acronis/SnapAPI/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Go/bin:/Docker/host/bin:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/atom/bin:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Programs/PROS/cli:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Programs/PROS/cquery:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/Microsoft/WindowsApps:/mnt/d/Microsoft VS Code/bin:/mnt/c/Users/SupremeOverlord Alex/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/SupremeOverlord Alex/AppData/Roaming/npm:/mnt/c/Program Files/heroku/bin:/mnt/c/Users/SupremeOverlord Alex/go/bin:/snap/bin:/usr/local/go/bin
+  /home/gnome2/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/bin/remote-cli:/home/gnome2/.nvm/versions/node/v18.12.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Razer/ChromaBroadcast/bin:/mnt/c/Program Files/Razer/ChromaBroadcast/bin:/mnt/c/Python311/Scripts/:/mnt/c/Python311/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Windows/system32/config/systemprofile/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Users/alexf/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/alexf/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/alexf/AppData/Roaming/npm:/snap/bin
 
 Yarn version: 
-  1.22.15
+  1.22.19
 
 Node version: 
-  16.14.2
+  18.12.1
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/openzeppelin%2fopenzeppelin-contracts-upgradeable/: Request "https://registry.yarnpkg.com/openzeppelin%2fopenzeppelin-contracts-upgradeable/" returned a 405
-      at Request.params.callback [as _callback] (/home/gnome/.node/corepack/yarn/1.22.15/lib/cli.js:66149:18)
-      at Request.self.callback (/home/gnome/.node/corepack/yarn/1.22.15/lib/cli.js:140885:22)
-      at Request.emit (node:events:526:28)
-      at Request.<anonymous> (/home/gnome/.node/corepack/yarn/1.22.15/lib/cli.js:141857:10)
-      at Request.emit (node:events:526:28)
-      at IncomingMessage.<anonymous> (/home/gnome/.node/corepack/yarn/1.22.15/lib/cli.js:141779:12)
-      at Object.onceWrapper (node:events:645:28)
-      at IncomingMessage.emit (node:events:538:35)
-      at endReadableNT (node:internal/streams/readable:1345:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: https://registry.yarnpkg.com/hyperlane-xyz%2fhyperlane-monorepo/solidity: Request "https://registry.yarnpkg.com/hyperlane-xyz%2fhyperlane-monorepo/solidity" returned a 405
+      at params.callback [as _callback] (/home/gnome2/.cache/node/corepack/yarn/1.22.19/lib/cli.js:66154:18)
+      at self.callback (/home/gnome2/.cache/node/corepack/yarn/1.22.19/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/home/gnome2/.cache/node/corepack/yarn/1.22.19/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/home/gnome2/.cache/node/corepack/yarn/1.22.19/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
   {

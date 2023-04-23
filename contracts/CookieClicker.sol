@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
-import "@uniswap/v3-periphery/contracts/libraries/PositionValue.sol";
-import "@uniswap/v3-periphery/contracts/libraries/LiquidityAmounts.sol";
-import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+pragma solidity ^0.8.18;
 
-pragma solidity ^0.7.0;
-pragma abicoder v2;
+import "./Interfaces/IMailbox.sol";
+import "./Interfaces/IMessageRecipient.sol";
+import "./Interfaces/IInterchainGasPaymaster.sol";
+import "./Interfaces/IInterchainQueryRouter.sol";
+
 //Users can upgrade their cookie and earn more
 //For example, a user can do a cursor upgrade and earn 0.1 cookies per second
 //Users are given an ERC20 token called cookies(right now just points)
@@ -17,8 +16,9 @@ interface ZKaptchaInterface {
 
 contract CookieClicker {
     address immutable dev;
-    ZKaptchaInterface immutable zkaptcha;
-    address public immutable captchaContract;
+    IMailbox immutable mailBox;
+    IInterchainQueryRouter public immutable queryRouter;
+    IInterchainGasPaymaster public immutable interchainGasPaymaster;
     event captchaNeededForUser(address indexed user);
 
     modifier sessionStarted(address user) {
@@ -39,22 +39,25 @@ contract CookieClicker {
         }
         _;
     }
+    uint32 public constant arbGoerliDomainID = 421613;
 
     // implement ZKaptcha anti-bot in your smart contract
 
-    constructor(address captchaAddy) {
+    constructor(
+        address arbogerliMailBoxAddy,
+        address argbGoerliQueryAddy,
+        address arbGasAddy
+    ) {
         dev = msg.sender;
         idToUpgrade[1] = Upgrade(10, 1, 0);
         idToUpgrade[2] = Upgrade(10, 0, 1);
-        zkaptcha = ZKaptchaInterface(
-            0xf5DCa59461adFFF5089BE5068364eC10B86c2a88
-        );
-        captchaContract = captchaAddy;
+        queryRouter = IInterchainQueryRouter(argbGoerliQueryAddy);
+        mailBox = IMailbox(arbogerliMailBoxAddy);
+        interchainGasPaymaster = IInterchainGasPaymaster(arbGasAddy);
     }
 
     mapping(address => cookieGame) public userCookie;
     mapping(address => GameSession) public mostRecentUserSession;
-    uint256 public d;
     mapping(uint256 => Upgrade) public idToUpgrade;
     mapping(address => mapping(uint256 => uint256)) public idUserToNum; //Tracks the number of purchases of a single upgrade
 
@@ -99,27 +102,78 @@ contract CookieClicker {
     }
 
     mapping(address => uint256) userCaptchaStart;
+    uint256 public timeSpent;
 
-    function callForCaptcha(address user) public onlyDev {
-        //emit event()
-        emit captchaNeededForUser(user);
+    function giveUserCaptcha(address user) public onlyDev {
+        userCaptchaStart[user] = block.timestamp;
     }
 
-    function confirmCaptcha(
-        address user,
-        uint256 timeStarted,
-        uint256 timeEnded
-    ) public onlyDev {
-        mostRecentUserSession[user].sessionGame.totalSpent =
-            (timeEnded - timeStarted) *
-            10;
+    // alignment preserving cast
+    function addressToBytes32(address _addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(_addr)));
     }
 
-    function addClick(
-        address user,
-        uint256 clickAmount
-    ) public sessionStarted(user) {
-        mostRecentUserSession[user].sessionGame.totalClicks += clickAmount;
+    function isCaptchaValid(bytes memory proof) public view returns (bool) {}
+
+    // function submitCaptcha(
+    //     uint32 _destinationDomain,
+    //     address captchaContract,
+    //     bytes memory proof,
+    //     uint256 gasAmount
+    // ) external payable {
+    //     bytes32 _messageId = queryRouter.query(
+    //         _destinationDomain,
+    //         captchaContract,
+    //         abi.encodePacked(this.isCaptchaValid.selector, proof),
+    //         abi.encodePacked(this.handleQueryUint256Result.selector)
+    //     );
+
+    //     _payForGas(_messageId, _destinationDomain, gasAmount);
+    // }
+    function submitCaptcha(
+        uint32 _destinationDomain,
+        address captchaContract,
+        uint256 gasAmount,
+        //string memory message,
+        bytes memory message
+    ) external payable {
+        bytes32 _messageId = mailBox.dispatch(
+            _destinationDomain,
+            addressToBytes32(captchaContract),
+            message
+            //abi.encode(message)
+        );
+
+        _payForGas(_messageId, _destinationDomain, gasAmount);
+    }
+
+    uint256 public lastUint256Result;
+
+    function handleQueryUint256Result(uint256 _result) external {
+        lastUint256Result = _result;
+    }
+
+    function _payForGas(
+        bytes32 _messageId,
+        uint32 _destinationDomain,
+        uint256 _gasAmount
+    ) internal {
+        interchainGasPaymaster.payForGas{value: msg.value}(
+            _messageId,
+            _destinationDomain,
+            _gasAmount,
+            msg.sender
+        );
+    }
+
+    function getGasQuote(
+        uint32 _destinationDomain,
+        uint256 _gasAmount
+    ) public view returns (uint256 quotedPayment) {
+        quotedPayment = interchainGasPaymaster.quoteGasPayment(
+            _destinationDomain,
+            _gasAmount
+        );
     }
 
     //Might make it so that a user has to send a transaction when they purchase an upgrade
@@ -260,36 +314,5 @@ contract CookieClicker {
         userCookie[userAddress].interestLastComputed = block.timestamp; //Resetting interest
 
         delete mostRecentUserSession[userAddress];
-    }
-    function redeedCookie(uint256 amount) public {
-        
-    }
-    //Need to save the pool somewhere
-    struct positionInfo {
-        int24 lowerBound;
-        int24 upperBound;
-        uint256 token0Amount;
-        uint256 token1Amount;
-    }
-    function buyBond(uint256 cookieAmount, uint256 stableAmount, ) public {
-        //Transfer both tokens from user
-        jsInfo.userToken.transferFrom(msg.sender, address(this), cookieAmount);
-        jsInfo.userToken.transferFrom(msg.sender, address(this), stableAmount);
-        //Use the mint params to create position
-        INonfungiblePositionManager.MintParams
-            memory params = INonfungiblePositionManager.MintParams({
-                token0: IUniswapV3Pool(positonInfo.desiredPool).token0(),
-                token1: IUniswapV3Pool(positonInfo.desiredPool).token1(),
-                fee: IUniswapV3Pool(positonInfo.desiredPool).fee(),
-                tickLower: positonInfo.lowerBound,
-                tickUpper: positonInfo.upperBound,
-                amount0Desired: jsInfo.goalToken0,
-                amount1Desired: jsInfo.goalToken1,
-                amount0Min: 0,
-                amount1Min: 0,
-                recipient: address(this),
-                deadline: block.timestamp + 1000000
-            });
-        //Mint the position with the NFT
     }
 }

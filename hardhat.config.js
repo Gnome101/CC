@@ -18,8 +18,8 @@ const GOERLI_RPC_URL =
   process.env.GOERLI_RPC_URL ||
   "https://eth-rinkeby.alchemyapi.io/v2/your-api-key";
 
-const SEPOLIA_RPC_URL =
-  process.env.SEPOLIA_RPC_URL ||
+const NOVA_RPC_URL =
+  process.env.NOVA_RPC_URL ||
   "https://polygon-mainnet.alchemyapi.io/v2/your-api-key";
 
 const ARB_GOERLI_RPC_URL =
@@ -39,9 +39,9 @@ module.exports = {
   networks: {
     hardhat: {
       forking: {
-        url: MAINNET_RPC_URL,
+        url: NOVA_RPC_URL,
       },
-      chainId: 31337,
+      chainId: 42170,
     },
     localhost: {
       chainId: 31337,
@@ -55,14 +55,14 @@ module.exports = {
       saveDeployments: true,
       chainId: 5,
     },
-    sepolia: {
-      url: SEPOLIA_RPC_URL,
+    nova: {
+      url: NOVA_RPC_URL,
       accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       //   accounts: {
       //     mnemonic: MNEMONIC,
       //   },
       saveDeployments: true,
-      chainId: 11155111,
+      chainId: 42170,
     },
     arb_goerli: {
       url: ARB_GOERLI_RPC_URL,
@@ -99,7 +99,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.7.0",
+        version: "0.8.18",
         settings: {
           optimizer: {
             enabled: true,

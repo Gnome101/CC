@@ -101,79 +101,68 @@ contract CookieClicker {
             mostRecentUserSession[user].sessionGame.clickModifier;
     }
 
-    mapping(address => uint256) userCaptchaStart;
+    mapping(address => userCaptchaInformation) public userCaptchaInfo;
     uint256 public timeSpent;
 
     function giveUserCaptcha(address user) public onlyDev {
-        userCaptchaStart[user] = block.timestamp;
+        userCaptchaInfo[user] = userCaptchaInformation(
+            false,
+            block.timestamp,
+            0
+        );
+    }
+
+    struct userCaptchaInformation {
+        bool finished;
+        uint256 captchaStart;
+        uint256 captchEnd;
     }
 
     // alignment preserving cast
-    function addressToBytes32(address _addr) internal pure returns (bytes32) {
-        return bytes32(uint256(uint160(_addr)));
-    }
 
-    function isCaptchaValid(bytes memory proof) public view returns (bool) {}
-
-    // function submitCaptcha(
-    //     uint32 _destinationDomain,
-    //     address captchaContract,
-    //     bytes memory proof,
-    //     uint256 gasAmount
-    // ) external payable {
-    //     bytes32 _messageId = queryRouter.query(
-    //         _destinationDomain,
-    //         captchaContract,
-    //         abi.encodePacked(this.isCaptchaValid.selector, proof),
-    //         abi.encodePacked(this.handleQueryUint256Result.selector)
-    //     );
-
-    //     _payForGas(_messageId, _destinationDomain, gasAmount);
-    // }
     function submitCaptcha(
         uint32 _destinationDomain,
         address captchaContract,
         uint256 gasAmount,
         //string memory message,
-        bytes memory message
+        bytes memory message,
+        address user
     ) external payable {
         bytes32 _messageId = mailBox.dispatch(
-            _destinationDomain,
+            arbGoerliDomainID,
             addressToBytes32(captchaContract),
-            message
+            abi.encode(message, user)
             //abi.encode(message)
         );
-
-        _payForGas(_messageId, _destinationDomain, gasAmount);
     }
 
-    uint256 public lastUint256Result;
+    uint256 public returnedNum;
+    uint256 public worked;
+    uint256 public numRes;
+    address public user;
+    event userDidCaptcha(address user, bool correct);
 
-    function handleQueryUint256Result(uint256 _result) external {
-        lastUint256Result = _result;
-    }
-
-    function _payForGas(
-        bytes32 _messageId,
-        uint32 _destinationDomain,
-        uint256 _gasAmount
-    ) internal {
-        interchainGasPaymaster.payForGas{value: msg.value}(
-            _messageId,
-            _destinationDomain,
-            _gasAmount,
-            msg.sender
-        );
-    }
-
-    function getGasQuote(
-        uint32 _destinationDomain,
-        uint256 _gasAmount
-    ) public view returns (uint256 quotedPayment) {
-        quotedPayment = interchainGasPaymaster.quoteGasPayment(
-            _destinationDomain,
-            _gasAmount
-        );
+    function handle(
+        uint32 _origin,
+        bytes32 _sender,
+        bytes calldata _message
+    ) external {
+        require(msg.sender == address(mailBox));
+        require(_origin == uint32(arbGoerliDomainID));
+        worked = 31213;
+        (numRes, user) = abi.decode(_message, (uint256, address));
+        if (numRes == 2) {
+            returnedNum = 321;
+            userCaptchaInfo[user].captchEnd = block.timestamp;
+            userCaptchaInfo[user].finished = true;
+            emit userDidCaptcha(user, true);
+        }
+        if (numRes == 1) {
+            returnedNum = 123;
+            userCaptchaInfo[user].captchEnd += 1;
+            userCaptchaInfo[user].finished = false;
+            emit userDidCaptcha(user, false);
+        }
     }
 
     //Might make it so that a user has to send a transaction when they purchase an upgrade
@@ -314,5 +303,13 @@ contract CookieClicker {
         userCookie[userAddress].interestLastComputed = block.timestamp; //Resetting interest
 
         delete mostRecentUserSession[userAddress];
+    }
+
+    function addressToBytes32(address _addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(_addr)));
+    }
+
+    function interchainSecurityModule() external pure returns (address) {
+        return 0x5Fe9b2cAcD42593408A49D97aa061a1666C595E9;
     }
 }

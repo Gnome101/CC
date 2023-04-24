@@ -152,7 +152,7 @@ describe("Cookie Clicker ", function () {
         const ans = await askQuestion("What is it saying: ");
         console.log(ans);
         const proof = await getProof(
-          "0xC34Ecf40fa8Bf08C763E0CeAb618f77301F8578b",
+          "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
           ans
         );
         const destinationID = 421613;
@@ -160,7 +160,7 @@ describe("Cookie Clicker ", function () {
         console.log(amount.toString());
         await cookieClicker.submitCaptcha(
           destinationID,
-          "0xC34Ecf40fa8Bf08C763E0CeAb618f77301F8578b",
+          "0x480D8978316a3cceCcaA78f16fb57A63cd51Da81",
           0,
           proof,
           { value: "0" }
@@ -169,7 +169,8 @@ describe("Cookie Clicker ", function () {
         //rough sketch of sending args to the prover
       });
       it("user can mint a bond 24", async () => {
-        console.log((await cookieClicker.localDomain()).toString());
+        console.log((await cookieClicker.returnedNum()).toString());
+        console.log((await cookieClicker.worked()).toString());
       });
     });
   });

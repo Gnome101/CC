@@ -1,0 +1,50 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Interfaces/IInterchainSecurityModule.sol": {
+      "content": "// SPDX-License-Identifier: MIT OR Apache-2.0\npragma solidity >=0.6.11;\n\ninterface IInterchainSecurityModule {\n    enum Types {\n        UNUSED,\n        ROUTING,\n        AGGREGATION,\n        LEGACY_MULTISIG,\n        MULTISIG\n    }\n\n    /**\n     * @notice Returns an enum that represents the type of security model\n     * encoded by this ISM.\n     * @dev Relayers infer how to fetch and format metadata.\n     */\n    function moduleType() external view returns (uint8);\n\n    /**\n     * @notice Defines a security model responsible for verifying interchain\n     * messages based on the provided metadata.\n     * @param _metadata Off-chain metadata provided by a relayer, specific to\n     * the security model encoded by the module (e.g. validator signatures)\n     * @param _message Hyperlane encoded interchain message\n     * @return True if the message was verified\n     */\n    function verify(\n        bytes calldata _metadata,\n        bytes calldata _message\n    ) external returns (bool);\n}\n\ninterface ISpecifiesInterchainSecurityModule {\n    function interchainSecurityModule()\n        external\n        view\n        returns (IInterchainSecurityModule);\n}\n"
+    },
+    "contracts/Interfaces/IMailbox.sol": {
+      "content": "// SPDX-License-Identifier: MIT OR Apache-2.0\npragma solidity >=0.8.0;\n\nimport {IInterchainSecurityModule} from \"./IInterchainSecurityModule.sol\";\n\ninterface IMailbox {\n    // ============ Events ============\n    /**\n     * @notice Emitted when a new message is dispatched via Hyperlane\n     * @param sender The address that dispatched the message\n     * @param destination The destination domain of the message\n     * @param recipient The message recipient address on `destination`\n     * @param message Raw bytes of message\n     */\n    event Dispatch(\n        address indexed sender,\n        uint32 indexed destination,\n        bytes32 indexed recipient,\n        bytes message\n    );\n\n    /**\n     * @notice Emitted when a new message is dispatched via Hyperlane\n     * @param messageId The unique message identifier\n     */\n    event DispatchId(bytes32 indexed messageId);\n\n    /**\n     * @notice Emitted when a Hyperlane message is processed\n     * @param messageId The unique message identifier\n     */\n    event ProcessId(bytes32 indexed messageId);\n\n    /**\n     * @notice Emitted when a Hyperlane message is delivered\n     * @param origin The origin domain of the message\n     * @param sender The message sender address on `origin`\n     * @param recipient The address that handled the message\n     */\n    event Process(\n        uint32 indexed origin,\n        bytes32 indexed sender,\n        address indexed recipient\n    );\n\n    function localDomain() external view returns (uint32);\n\n    function delivered(bytes32 messageId) external view returns (bool);\n\n    function defaultIsm() external view returns (IInterchainSecurityModule);\n\n    function dispatch(\n        uint32 _destinationDomain,\n        bytes32 _recipientAddress,\n        bytes calldata _messageBody\n    ) external returns (bytes32);\n\n    function process(\n        bytes calldata _metadata,\n        bytes calldata _message\n    ) external;\n\n    function count() external view returns (uint32);\n\n    function root() external view returns (bytes32);\n\n    function latestCheckpoint() external view returns (bytes32, uint32);\n\n    function recipientIsm(\n        address _recipient\n    ) external view returns (IInterchainSecurityModule);\n}\n"
+    },
+    "contracts/Interfaces/IMessageRecipient.sol": {
+      "content": "// SPDX-License-Identifier: MIT OR Apache-2.0\npragma solidity >=0.6.11;\n\ninterface IMessageRecipient {\n    function handle(\n        uint32 _origin,\n        bytes32 _sender,\n        bytes calldata _message\n    ) external;\n}\n"
+    },
+    "contracts/Interfaces/ZKaptchaInterface.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.18;\n\n//Users can upgrade their cookie and earn more\n//For example, a user can do a cursor upgrade and earn 0.1 cookies per second\n//Users are given an ERC20 token called cookies(right now just points)\ninterface ZKaptchaInterface {\n    function verifyZkProof(bytes calldata zkProof) external view returns (bool);\n}\n"
+    },
+    "contracts/ZKCaptcha.sol": {
+      "content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.18;\n\nimport \"./Interfaces/IMailbox.sol\";\nimport \"./Interfaces/IInterchainSecurityModule.sol\";\nimport \"./Interfaces/IMessageRecipient.sol\";\nimport \"./Interfaces/ZKaptchaInterface.sol\";\n\ncontract ZKCaptcha {\n    address immutable dev;\n    address public immutable cookieGame;\n    ZKaptchaInterface immutable zkaptcha;\n    IMailbox immutable mailBox;\n\n    uint32 public constant arbNovaDID = 42170;\n\n    modifier onlyDev() {\n        //The game only works if a session was started\n        require(msg.sender == dev);\n        _;\n    }\n\n    constructor(address _cookieGame) {\n        dev = msg.sender;\n        cookieGame = _cookieGame;\n        zkaptcha = ZKaptchaInterface(\n            0xf5DCa59461adFFF5089BE5068364eC10B86c2a88 //zKaptcha contract\n        );\n        mailBox = IMailbox(0xCC737a94FecaeC165AbCf12dED095BB13F037685); //Arbitum Goerli Mailbox\n    }\n\n    mapping(address => uint256) userCaptchaStart;\n    uint256 public timeSpent;\n\n    function submitCaptcha(bytes memory proof) internal {\n        require(zkaptcha.verifyZkProof(proof));\n        timeSpent = block.timestamp - userCaptchaStart[msg.sender];\n    }\n\n    uint256 public requests;\n    bool public validResponse;\n    mapping(address => bytes) public userData;\n\n    function handle(\n        uint32 _origin,\n        bytes32 _sender,\n        bytes calldata _message\n    ) external {\n        requests = requests + 1;\n        (bytes memory res, address user) = abi.decode(\n            _message,\n            (bytes, address)\n        );\n        bytes memory newMessage = abi.encodePacked(res);\n        try zkaptcha.verifyZkProof(newMessage) returns (bool) {\n            validResponse = zkaptcha.verifyZkProof(newMessage);\n        } catch {\n            validResponse = false;\n        }\n        if (validResponse) {\n            uint256 num = 2;\n            bytes memory response = abi.encode(num, user);\n            mailBox.dispatch(\n                arbNovaDID,\n                addressToBytes32(cookieGame),\n                response\n            );\n        } else {\n            uint256 num = 1;\n            bytes memory response = abi.encode(num, user);\n            mailBox.dispatch(\n                arbNovaDID,\n                addressToBytes32(cookieGame),\n                response\n            );\n        }\n    }\n\n    function addressToBytes32(address _addr) internal pure returns (bytes32) {\n        return bytes32(uint256(uint160(_addr)));\n    }\n\n    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {\n        return address(uint160(uint256(_buf)));\n    }\n\n    function interchainSecurityModule() external pure returns (address) {\n        return 0x963C7950B97e2ce301Eb49Fb1928aA5C7fe8e8eC;\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 2000,
+      "details": {
+        "yul": true
+      }
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

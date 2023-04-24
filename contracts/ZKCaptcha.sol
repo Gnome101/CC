@@ -2,18 +2,16 @@
 
 pragma solidity ^0.8.18;
 
-//Users can upgrade their cookie and earn more
-//For example, a user can do a cursor upgrade and earn 0.1 cookies per second
-//Users are given an ERC20 token called cookies(right now just points)
-interface ZKaptchaInterface {
-    function verifyZkProof(bytes calldata zkProof) external view returns (bool);
-}
+import "./Interfaces/IMailbox.sol";
+import "./Interfaces/IInterchainSecurityModule.sol";
+import "./Interfaces/IMessageRecipient.sol";
+import "./Interfaces/ZKaptchaInterface.sol";
 
 contract ZKCaptcha {
     address immutable dev;
-    address immutable cookieGame;
+    address public immutable cookieGame;
     ZKaptchaInterface immutable zkaptcha;
-    event captchaNeededForUser(address indexed user);
+    IMailbox immutable mailBox;
 
     uint32 public constant arbNovaDID = 42170;
 
@@ -23,14 +21,13 @@ contract ZKCaptcha {
         _;
     }
 
-    // implement ZKaptcha anti-bot in your smart contract
-
     constructor(address _cookieGame) {
         dev = msg.sender;
         cookieGame = _cookieGame;
         zkaptcha = ZKaptchaInterface(
-            0xCDA94740093d8ca3dBF7f8E0c9a22580D032D91d
+            0xf5DCa59461adFFF5089BE5068364eC10B86c2a88 //zKaptcha contract
         );
+        mailBox = IMailbox(0xCC737a94FecaeC165AbCf12dED095BB13F037685); //Arbitum Goerli Mailbox
     }
 
     mapping(address => uint256) userCaptchaStart;
@@ -41,15 +38,56 @@ contract ZKCaptcha {
         timeSpent = block.timestamp - userCaptchaStart[msg.sender];
     }
 
-    function isCaptchaValid(bytes memory proof) public view returns (uint256) {
-        if (zkaptcha.verifyZkProof(proof)) {
-            return 1921;
+    uint256 public requests;
+    bool public validResponse;
+    mapping(address => bytes) public userData;
+
+    function handle(
+        uint32 _origin,
+        bytes32 _sender,
+        bytes calldata _message
+    ) external {
+        require(msg.sender == address(mailBox));
+        require(_origin == uint32(arbNovaDID));
+        requests = requests + 1;
+        (bytes memory res, address user) = abi.decode(
+            _message,
+            (bytes, address)
+        );
+        bytes memory newMessage = abi.encodePacked(res);
+        try zkaptcha.verifyZkProof(newMessage) returns (bool) {
+            validResponse = zkaptcha.verifyZkProof(newMessage);
+        } catch {
+            validResponse = false;
         }
-        return 1;
+        if (validResponse) {
+            uint256 num = 2;
+            bytes memory response = abi.encode(num, user);
+            mailBox.dispatch(
+                arbNovaDID,
+                addressToBytes32(cookieGame),
+                response
+            );
+        } else {
+            uint256 num = 1;
+            bytes memory response = abi.encode(num, user);
+            mailBox.dispatch(
+                arbNovaDID,
+                addressToBytes32(cookieGame),
+                response
+            );
+        }
     }
 
-    // alignment preserving cast
+    function addressToBytes32(address _addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(_addr)));
+    }
+
     function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
         return address(uint160(uint256(_buf)));
+    }
+
+    function interchainSecurityModule() external pure returns (address) {
+        return 0x963C7950B97e2ce301Eb49Fb1928aA5C7fe8e8eC;
     }
 }

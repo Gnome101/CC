@@ -8,7 +8,9 @@ async function main() {
   console.log((await cookieClicker.user()).toString());
   console.log((await cookieClicker.numRes()).toString());
 
-  console.log(await cookieClicker.userCaptchaInfo(deployer.address));
+  console.log(
+    (await cookieClicker.userCaptchaInfo(deployer.address)).toString()
+  );
   console.log(cookieClicker.address);
   // console.log((await gameClient.num()).toString())
 }
